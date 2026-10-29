@@ -5,7 +5,6 @@
     ATENCIÓN: si la base ya existe, la BORRA y la vuelve a crear.
 
     Diagrama entidad-relación (DER) y su código DBML: https://dbdiagram.io/d/6ae36b49aac33014105af07d
-    Si cambia el modelo, actualizar también el diagrama y exportar de nuevo database/DER.png.
 
     Usuarios de prueba:
         admin    / admin123     (Administrador)

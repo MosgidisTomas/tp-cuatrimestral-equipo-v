@@ -1,21 +1,504 @@
-﻿/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
+﻿/* Paleta de la marca */
+:root {
+    --uh-marino: #161F33;
+    --uh-cian: #12C8F0;
+    --uh-azul: #0B7FA8;          /* botones principales y links sobre fondo claro */
+    --uh-azul-oscuro: #086283;
+    --uh-dorado: #D4A843;        /* solo detalles sobre fondo marino */
+    --uh-fondo: #F4F6F9;
+    --uh-borde: #E1E6EE;
+    --uh-texto: #161F33;
+    --uh-texto-suave: #5B6478;
+    --uh-menu-texto: #D3DBE8;
+    --uh-menu-seccion: #8E9AB0;
+
+    /* Bootstrap: el color "primary" pasa a ser el azul de la marca */
+    --bs-primary: #0B7FA8;
+    --bs-primary-rgb: 11, 127, 168;
+    --bs-link-color: #0B7FA8;
+    --bs-link-hover-color: #086283;
+    --bs-body-font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --bs-body-color: #161F33;
+    --bs-body-bg: #F4F6F9;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
+body {
+    font-family: var(--bs-body-font-family);
+    color: var(--uh-texto);
+    background-color: var(--uh-fondo);
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-    .body-content {
-        padding: 0;
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Montserrat", "Inter", sans-serif;
+    font-weight: 700;
+    color: var(--uh-texto);
+}
+
+a {
+    color: var(--uh-azul);
+}
+
+    a:hover {
+        color: var(--uh-azul-oscuro);
     }
+
+/* Botón principal de Bootstrap con el azul de la marca */
+.btn-primary {
+    --bs-btn-bg: var(--uh-azul);
+    --bs-btn-border-color: var(--uh-azul);
+    --bs-btn-hover-bg: var(--uh-azul-oscuro);
+    --bs-btn-hover-border-color: var(--uh-azul-oscuro);
+    --bs-btn-active-bg: var(--uh-azul-oscuro);
+    --bs-btn-active-border-color: var(--uh-azul-oscuro);
+    --bs-btn-disabled-bg: var(--uh-azul);
+    --bs-btn-disabled-border-color: var(--uh-azul);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--uh-azul);
+    box-shadow: 0 0 0 0.2rem rgba(11, 127, 168, 0.2);
+}
+
+/* =========================================================
+   Estructura: menú lateral + columna principal
+   ========================================================= */
+
+.app {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 100vh;
+}
+
+.columna-principal {
+    flex: 999 1 560px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---------- Menú lateral ---------- */
+
+.menu-lateral {
+    flex: 1 1 248px;
+    max-width: 100%;
+    background-color: var(--uh-marino);
+    padding: 20px 14px;
+}
+
+.menu-encabezado {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 8px 16px;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.marca-isotipo {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+
+.marca-texto {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    font-family: "Montserrat", "Inter", sans-serif;
+    font-weight: 700;
+}
+
+.marca-utn {
+    font-size: 17px;
+    color: #FFFFFF;
+}
+
+.marca-hardware {
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--uh-cian);
+}
+
+.btn-menu {
+    font-size: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: transparent;
+    color: #FFFFFF;
+}
+
+#menuOpciones {
+    padding-bottom: 8px;
+}
+
+.menu-seccion {
+    display: block;
+    padding: 14px 12px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--uh-menu-seccion);
+}
+
+.menu-opcion {
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--uh-menu-texto);
+    text-decoration: none;
+}
+
+    .menu-opcion:hover,
+    .menu-opcion:focus {
+        color: #FFFFFF;
+        background-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .menu-opcion.activa {
+        font-weight: 600;
+        color: var(--uh-cian);
+        background-color: rgba(18, 200, 240, 0.12);
+    }
+
+/* ---------- Barra superior, contenido y pie ---------- */
+
+.barra-superior {
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+    padding: 12px 32px;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid var(--uh-borde);
+}
+
+.barra-titulo {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--uh-texto);
+}
+
+.contenido {
+    flex: 1 0 auto;
+    width: 100%;
+    max-width: 1200px;
+    padding: 32px;
+}
+
+.pie {
+    padding: 16px 32px;
+    font-size: 13px;
+    color: var(--uh-texto-suave);
+}
+
+@media (max-width: 767.98px) {
+    .menu-lateral {
+        flex-basis: 100%;
+        padding: 12px 14px;
+    }
+
+    .menu-encabezado {
+        padding-bottom: 0;
+    }
+
+    #menuOpciones.show,
+    #menuOpciones.collapsing {
+        padding-top: 12px;
+    }
+
+    .barra-superior,
+    .contenido,
+    .pie {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .contenido {
+        padding-top: 20px;
+    }
+}
+
+/* =========================================================
+   Componentes de las páginas
+   ========================================================= */
+
+/* Encabezado de página: título, descripción y botón a la derecha */
+.encabezado-pagina {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+    .encabezado-pagina h1 {
+        margin: 0 0 4px;
+        font-size: 28px;
+    }
+
+    .encabezado-pagina p {
+        margin: 0;
+        font-size: 14px;
+        color: var(--uh-texto-suave);
+    }
+
+/* Tarjeta blanca */
+.tarjeta {
+    background-color: #FFFFFF;
+    border: 1px solid var(--uh-borde);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+/* Tabla dentro de una tarjeta (GridView con CssClass="table tabla") */
+.tabla-contenedor {
+    background-color: #FFFFFF;
+    border: 1px solid var(--uh-borde);
+    border-radius: 12px;
+    overflow-x: auto;
+}
+
+.tabla {
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+    .tabla th {
+        padding: 12px 16px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--uh-texto-suave);
+        background-color: var(--uh-fondo);
+        border-bottom: 1px solid var(--uh-borde);
+        white-space: nowrap;
+    }
+
+    .tabla td {
+        padding: 12px 16px;
+        vertical-align: middle;
+        border-bottom: 1px solid #EEF1F5;
+    }
+
+    .tabla tr:last-child td {
+        border-bottom: 0;
+    }
+
+/* Accesos rápidos del Inicio */
+.accesos {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.acceso {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    border: 1px solid var(--uh-borde);
+    color: var(--uh-texto);
+    text-decoration: none;
+}
+
+    .acceso:hover,
+    .acceso:focus {
+        border-color: var(--uh-azul);
+        color: var(--uh-texto);
+    }
+
+.acceso-icono {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background-color: var(--uh-marino);
+    color: var(--uh-cian);
+}
+
+.acceso-titulo {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.acceso-detalle {
+    font-size: 13px;
+    color: var(--uh-texto-suave);
+}
+
+@media (max-width: 991.98px) {
+    .accesos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 479.98px) {
+    .accesos {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+/* =========================================================
+   Formularios y operaciones (Nueva compra / Nueva venta)
+   ========================================================= */
+
+.form-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.form-control,
+.form-select {
+    min-height: 44px;
+    border-color: #C9D1DD;
+}
+
+    .form-control[readonly] {
+        background-color: var(--uh-fondo);
+        color: #3A4358;
+    }
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding-left: 18px;
+    padding-right: 18px;
+    font-weight: 600;
+}
+
+.titulo-seccion {
+    margin: 0 0 16px;
+    font-size: 17px;
+}
+
+.tarjeta + .tarjeta {
+    margin-top: 20px;
+}
+
+.texto-ayuda {
+    font-size: 13px;
+    color: var(--uh-texto-suave);
+}
+
+/* Aviso informativo */
+.nota-info {
+    padding: 12px 14px;
+    border-radius: 8px;
+    background-color: #E8F6FB;
+    color: #0A5876;
+    font-size: 14px;
+}
+
+/* Fila de totales debajo de una tabla de detalle */
+.fila-total {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    gap: 24px;
+    padding: 14px 16px 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/* Botonera al pie de un formulario */
+.acciones {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+/* Resumen lateral de la venta (fondo marino) */
+.resumen {
+    background-color: var(--uh-marino);
+    color: #FFFFFF;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.resumen-etiqueta {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: var(--uh-menu-seccion);
+}
+
+.resumen-linea {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 14px;
+    color: #C9D3E3;
+}
+
+    .resumen-linea strong,
+    .resumen-linea .valor {
+        color: #FFFFFF;
+        font-weight: 600;
+        text-align: right;
+    }
+
+.resumen-total {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.total-monto {
+    font-family: "Montserrat", "Inter", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--uh-dorado);
+}
+
+.resumen a {
+    color: #C9D3E3;
+}
+
+/* Botón cian (confirmar venta, sobre fondo marino) */
+.btn-cian {
+    background-color: var(--uh-cian);
+    border-color: var(--uh-cian);
+    color: var(--uh-marino);
+}
+
+    .btn-cian:hover,
+    .btn-cian:focus {
+        background-color: #4FD8F5;
+        border-color: #4FD8F5;
+        color: var(--uh-marino);
+    }
+
+.num {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
 }

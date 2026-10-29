@@ -23,5 +23,25 @@ namespace TPCuatrimestralEquipoV
         /// Control gvMarcas.
         /// </summary>
         protected global::System.Web.UI.WebControls.GridView gvMarcas;
+
+        /// <summary>
+        /// Control txtDescripcion.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
+
+        /// <summary>
+        /// Control txtPaisOrigen.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.TextBox txtPaisOrigen;
+
+        /// <summary>
+        /// Control btnLimpiar.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Button btnLimpiar;
+
+        /// <summary>
+        /// Control btnGuardar.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Button btnGuardar;
     }
 }

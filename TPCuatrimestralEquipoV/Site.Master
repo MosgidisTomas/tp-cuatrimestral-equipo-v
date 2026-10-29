@@ -4,24 +4,31 @@
 
 <html lang="es">
 <head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Mi aplicación ASP.NET</title>
+    <title><%: Page.Title %> - UTN Hardware</title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
 
-    <webopt:bundlereference runat="server" path="~/Content/css" />
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Montserrat:wght@600;700&amp;display=swap" rel="stylesheet" />
 
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <link href="~/Content/img/isotipo.png" rel="icon" type="image/png" />
+    <link href="~/favicon.ico?v=2" rel="shortcut icon" type="image/x-icon" />
+
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
 </head>
 <body>
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
-                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="jquery" />
@@ -38,30 +45,63 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" runat="server" href="~/">Nombre de la aplicación</a>
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar navegación" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Marcas">Marcas</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/About">Acerca de</a></li>
-                        <li class="nav-item"><a class="nav-link" runat="server" href="~/Contact">Contacto</a></li>
-                    </ul>
+        <div class="app">
+
+            <%-- Menú lateral. En pantallas chicas se pliega y se abre con el botón de menú. --%>
+            <nav class="menu-lateral" aria-label="Menú principal">
+                <div class="menu-encabezado">
+                    <a class="marca" runat="server" href="~/">
+                        <img runat="server" src="~/Content/img/isotipo.png" alt="" class="marca-isotipo" />
+                        <span class="marca-texto">
+                            <span class="marca-utn">UTN</span>
+                            <span class="marca-hardware">HARDWARE</span>
+                        </span>
+                    </a>
+                    <button type="button" class="btn-menu d-md-none" data-bs-toggle="collapse" data-bs-target="#menuOpciones"
+                        aria-controls="menuOpciones" aria-expanded="false" aria-label="Abrir o cerrar el menú">
+                        <i class="bi bi-list" aria-hidden="true"></i>
+                    </button>
                 </div>
+
+                <%-- Cada opción tiene un ID para que Site.Master.cs marque la página actual
+                     (y, más adelante, para ocultar opciones según el perfil del usuario). --%>
+                <div id="menuOpciones" class="collapse d-md-block">
+                    <a id="lnkInicio" runat="server" href="~/" class="menu-opcion">Inicio</a>
+
+                    <span class="menu-seccion">OPERACIONES</span>
+                    <a id="lnkNuevaVenta" runat="server" href="~/NuevaVenta" class="menu-opcion">Nueva venta</a>
+                    <a id="lnkNuevaCompra" runat="server" href="~/NuevaCompra" class="menu-opcion">Nueva compra</a>
+                    <a id="lnkVentas" runat="server" href="~/Ventas" class="menu-opcion">Ventas y facturas</a>
+
+                    <span class="menu-seccion">CATÁLOGO</span>
+                    <a id="lnkProductos" runat="server" href="~/Productos" class="menu-opcion">Productos</a>
+                    <a id="lnkMarcas" runat="server" href="~/Marcas" class="menu-opcion">Marcas</a>
+                    <a id="lnkCategorias" runat="server" href="~/Categorias" class="menu-opcion">Categorías</a>
+
+                    <span class="menu-seccion">CONTACTOS</span>
+                    <a id="lnkClientes" runat="server" href="~/Clientes" class="menu-opcion">Clientes</a>
+                    <a id="lnkProveedores" runat="server" href="~/Proveedores" class="menu-opcion">Proveedores</a>
+
+                    <span class="menu-seccion">ADMINISTRACIÓN</span>
+                    <a id="lnkUsuarios" runat="server" href="~/Usuarios" class="menu-opcion">Usuarios</a>
+                </div>
+            </nav>
+
+            <div class="columna-principal">
+                <header class="barra-superior">
+                    <span class="barra-titulo"><%: Page.Title %></span>
+                </header>
+
+                <main class="contenido">
+                    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                    </asp:ContentPlaceHolder>
+                </main>
+
+                <footer class="pie">
+                    &copy; <%: DateTime.Now.Year %> UTN Hardware · Programación 3 · UTN FRGP
+                </footer>
             </div>
-        </nav>
-        <div class="container body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Mi aplicación ASP.NET</p>
-            </footer>
+
         </div>
     </form>
     <asp:PlaceHolder runat="server">

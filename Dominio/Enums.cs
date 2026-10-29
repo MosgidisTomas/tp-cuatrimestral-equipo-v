@@ -15,7 +15,6 @@ namespace Dominio
     public enum TipoMovimiento
     {
         Compra = 1,
-        Venta = 2,
-        Ajuste = 3
+        Venta = 2
     }
 }

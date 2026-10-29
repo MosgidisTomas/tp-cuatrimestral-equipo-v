@@ -9,7 +9,10 @@ namespace Dominio
     public class Compra
     {
         public int Id { get; set; }
-        public DateTime Fecha { get; set; } = DateTime.Now;
+        // Número de la factura del proveedor (la carga el usuario).
+        public string NumeroFactura { get; set; }
+        // Fecha de la factura del proveedor (la carga el usuario).
+        public DateTime Fecha { get; set; } = DateTime.Today;
         public Proveedor Proveedor { get; set; }
         public Usuario Usuario { get; set; }
         public List<DetalleCompra> Detalles { get; set; } = new List<DetalleCompra>();

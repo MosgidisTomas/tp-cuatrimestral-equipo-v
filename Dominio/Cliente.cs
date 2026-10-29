@@ -15,6 +15,7 @@ namespace Dominio
         public string Telefono { get; set; }
         public string Email { get; set; }
         public string Direccion { get; set; }
+        public DateTime FechaAlta { get; set; } = DateTime.Today;
         public bool Activo { get; set; } = true;
 
         public string NombreCompleto

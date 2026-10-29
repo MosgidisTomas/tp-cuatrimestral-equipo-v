@@ -10,7 +10,12 @@ namespace Dominio
     {
         public int Id { get; set; }
         public string NombreUsuario { get; set; }
-        public string Password { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+
+        // Hash SHA-256 de la contraseña (64 caracteres hexadecimales en minúsculas).
+        // Nunca guarda la contraseña en texto plano.
+        public string PasswordHash { get; set; }
         public string Email { get; set; }
         public TipoPerfil Perfil { get; set; }
         public bool Activo { get; set; } = true;
@@ -18,6 +23,16 @@ namespace Dominio
         public bool EsAdministrador
         {
             get { return Perfil == TipoPerfil.Administrador; }
+        }
+
+        public string NombreCompleto
+        {
+            get { return Nombre + " " + Apellido; }
+        }
+
+        public override string ToString()
+        {
+            return NombreUsuario;
         }
     }
 }

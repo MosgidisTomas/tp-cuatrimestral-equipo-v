@@ -11,8 +11,6 @@ namespace TPCuatrimestralEquipoV
         {
             if (!IsPostBack)
             {
-                // Etapa 1: pantalla sin funcionalidad. Se enlaza una lista vacía para que la tabla
-                // muestre sus columnas. En la Etapa 2 se carga con ProductoNegocio.listar().
                 gvProductos.DataSource = new List<Producto>();
                 gvProductos.DataBind();
             }

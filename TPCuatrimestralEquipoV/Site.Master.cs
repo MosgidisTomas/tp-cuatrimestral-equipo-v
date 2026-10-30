@@ -13,10 +13,8 @@ namespace TPCuatrimestralEquipoV
             marcarOpcionActiva();
         }
 
-        // Resalta en el menú la opción de la página que se está viendo.
         private void marcarOpcionActiva()
         {
-            // Nombre del archivo de la página actual, sin extensión: "Default", "Marcas", etc.
             string pagina = Path.GetFileNameWithoutExtension(Request.AppRelativeCurrentExecutionFilePath);
 
             Dictionary<string, HtmlAnchor> opciones = new Dictionary<string, HtmlAnchor>(StringComparer.OrdinalIgnoreCase)

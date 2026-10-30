@@ -29,7 +29,6 @@
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
-                <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="jquery" />
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
@@ -41,13 +40,11 @@
                 <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
-                <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
 
         <div class="app">
 
-            <%-- Menú lateral. En pantallas chicas se pliega y se abre con el botón de menú. --%>
             <nav class="menu-lateral" aria-label="Menú principal">
                 <div class="menu-encabezado">
                     <a class="marca" runat="server" href="~/">
@@ -63,8 +60,6 @@
                     </button>
                 </div>
 
-                <%-- Cada opción tiene un ID para que Site.Master.cs marque la página actual
-                     (y, más adelante, para ocultar opciones según el perfil del usuario). --%>
                 <div id="menuOpciones" class="collapse d-md-block">
                     <a id="lnkInicio" runat="server" href="~/" class="menu-opcion">Inicio</a>
 

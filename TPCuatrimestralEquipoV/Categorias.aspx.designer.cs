@@ -15,14 +15,29 @@ namespace TPCuatrimestralEquipoV
     {
 
         /// <summary>
+        /// Control lblError.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
         /// Control gvCategorias.
         /// </summary>
         protected global::System.Web.UI.WebControls.GridView gvCategorias;
 
         /// <summary>
+        /// Control lblTituloFormulario.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblTituloFormulario;
+
+        /// <summary>
         /// Control txtDescripcion.
         /// </summary>
         protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
+
+        /// <summary>
+        /// Control lblErrorFormulario.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblErrorFormulario;
 
         /// <summary>
         /// Control btnLimpiar.
@@ -33,5 +48,25 @@ namespace TPCuatrimestralEquipoV
         /// Control btnGuardar.
         /// </summary>
         protected global::System.Web.UI.WebControls.Button btnGuardar;
+
+        /// <summary>
+        /// Control btnBaja.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Button btnBaja;
+
+        /// <summary>
+        /// Control chkConfirmaBaja.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.CheckBox chkConfirmaBaja;
+
+        /// <summary>
+        /// Control btnConfirmaBaja.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Button btnConfirmaBaja;
+
+        /// <summary>
+        /// Control btnReactivar.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Button btnReactivar;
     }
 }

@@ -11,8 +11,6 @@ namespace TPCuatrimestralEquipoV
         {
             if (!IsPostBack)
             {
-                // Etapa 1: pantalla sin funcionalidad. La venta se programa en la Etapa 3.
-                // Lista vacía para que la tabla del detalle muestre sus columnas.
                 gvDetalle.DataSource = new List<DetalleVenta>();
                 gvDetalle.DataBind();
             }

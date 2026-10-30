@@ -11,10 +11,8 @@ namespace TPCuatrimestralEquipoV
         {
             if (!IsPostBack)
             {
-                // Etapa 1: pantalla sin funcionalidad. La compra se programa en la Etapa 3.
                 txtFecha.Text = DateTime.Today.ToString("yyyy-MM-dd");
 
-                // Lista vacía para que la tabla del detalle muestre sus columnas.
                 gvDetalle.DataSource = new List<DetalleCompra>();
                 gvDetalle.DataBind();
             }

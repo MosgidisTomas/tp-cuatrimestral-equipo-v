@@ -6,8 +6,6 @@ namespace Negocio
 {
     public class MarcaNegocio
     {
-        // soloActivas = true: solo las marcas activas (para listados y desplegables).
-        // soloActivas = false: todas, incluidas las dadas de baja.
         public List<Marca> listar(bool soloActivas = true)
         {
             List<Marca> lista = new List<Marca>();
@@ -37,7 +35,6 @@ namespace Negocio
             }
         }
 
-        // Devuelve el Id de la marca nueva.
         public int agregar(Marca nueva)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -73,7 +70,6 @@ namespace Negocio
             }
         }
 
-        // Baja lógica: la marca queda con Activo = 0 y deja de aparecer en los listados.
         public void eliminar(int id)
         {
             AccesoDatos datos = new AccesoDatos();

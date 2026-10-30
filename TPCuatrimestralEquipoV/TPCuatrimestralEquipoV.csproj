@@ -120,6 +120,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Marcas.aspx" />
     <Content Include="Categorias.aspx" />
+    <Content Include="FormularioProveedor.aspx" />
     <Content Include="Proveedores.aspx" />
     <Content Include="Usuarios.aspx" />
     <Content Include="Ventas.aspx" />
@@ -233,6 +234,13 @@
     </Compile>
     <Compile Include="Categorias.aspx.designer.cs">
       <DependentUpon>Categorias.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FormularioProveedor.aspx.cs">
+      <DependentUpon>FormularioProveedor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioProveedor.aspx.designer.cs">
+      <DependentUpon>FormularioProveedor.aspx</DependentUpon>
     </Compile>
     <Compile Include="Proveedores.aspx.cs">
       <DependentUpon>Proveedores.aspx</DependentUpon>

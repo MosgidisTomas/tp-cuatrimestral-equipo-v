@@ -50,7 +50,7 @@ namespace Negocio
                     aux.StockMinimo = (int)datos.Lector["StockMinimo"];
                     aux.Activo = (bool)datos.Lector["Activo"];
 
-                    // Columnas que pueden ser NULL
+                    
                     if (!(datos.Lector["Descripcion"] is DBNull))
                         aux.Descripcion = (string)datos.Lector["Descripcion"];
                     if (!(datos.Lector["UrlImagen"] is DBNull))
@@ -85,7 +85,7 @@ namespace Negocio
             {
                 datos.iniciarTransaccion();
 
-                // 1) Insertar el producto y obtener su Id
+                
                 datos.setearConsulta(@"INSERT INTO Productos
                     (Codigo, Nombre, Descripcion, UrlImagen, IdMarca, IdCategoria,
                     StockActual, StockMinimo, PorcentajeGananacia, Activo)
@@ -106,7 +106,7 @@ namespace Negocio
 
                 nuevo.Id = Convert.ToInt32(datos.ejecutarAccionEscalar());
 
-                // 2) Insertar las relaciones con proveedores (sin repetidos)
+                
                 foreach (int idProveedor in nuevo.Proveedores.Select(p => p.Id).Distinct())
                 {
                     datos.setearConsulta(@"INSERT INTO ProductoProveedor (IdProducto, IdProveedor)
@@ -231,29 +231,29 @@ namespace Negocio
             }
         }
 
-        private const string ConsultaBase = @"SELECT   P.Id,
-                                                       P.Codigo,
-                                                       P.Nombre,
-                                                       P.Descripcion,
-                                                       P.UrlImagen,
-                                                       P.StockActual,
-                                                       P.StockMinimo,
-                                                       P.PorcentajeGananacia,
-                                                       P.Activo,
-                                                       P.IdMarca,
-                                                       M.Descripcion AS Marca,
-                                                       P.IdCategoria,
-                                                       C.Descripcion AS Categoria,
-                                                       ISNULL((SELECT TOP 1 DC.PrecioUnitario
-                                                               FROM DetalleCompras DC
-                                                               INNER JOIN Compras CO ON CO.Id = DC.IdCompra
-                                                               WHERE DC.IdProducto = P.Id
-                                                               ORDER BY CO.Fecha DESC), 0) AS UltimoPrecioCompra,
-                                                       CASE WHEN EXISTS (SELECT 1 FROM DetalleCompras DC WHERE DC.IdProducto = P.Id)
-                                                            THEN 1 ELSE 0 END AS TieneCompras
-                                                FROM Productos P
-                                                INNER JOIN Marcas M ON M.Id = P.IdMarca
-                                                INNER JOIN Categorias C ON C.Id = P.IdCategoria";
+        private const string ConsultaBase = @"SELECT P.Id,
+                                                     P.Codigo,
+                                                     P.Nombre,
+                                                     P.Descripcion,
+                                                     P.UrlImagen,
+                                                     P.StockActual,
+                                                     P.StockMinimo,
+                                                     P.PorcentajeGanancia,
+                                                     P.Activo,
+                                                     P.IdMarca,
+                                                     M.Descripcion AS Marca,
+                                                     P.IdCategoria,
+                                                     C.Descripcion AS Categoria,
+                                                     ISNULL((SELECT TOP 1 DC.PrecioUnitario
+                                                              FROM DetalleCompra DC
+                                                              INNER JOIN Compras CO ON CO.Id = DC.IdCompra
+                                                              WHERE DC.IdProducto = P.Id
+                                                              ORDER BY CO.Fecha DESC, CO.Id DESC, DC.Id DESC), 0) AS UltimoPrecioCompra,
+                                                        CASE WHEN EXISTS (SELECT 1 FROM DetalleCompra DC WHERE DC.IdProducto = P.Id)
+                                                             THEN 1 ELSE 0 END AS TieneCompras
+                                                     FROM Productos P
+                                                     INNER JOIN Marcas M ON M.Id = P.IdMarca
+                                                     INNER JOIN Categorias C ON C.Id = P.IdCategoria";
 
         private Producto mapear(SqlDataReader lector)
         {

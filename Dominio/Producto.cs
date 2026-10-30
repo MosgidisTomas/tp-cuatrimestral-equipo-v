@@ -24,10 +24,8 @@ namespace Dominio
 
         public decimal PorcentajeGanancia { get; set; }
 
-        // Costo de la última compra. Lo carga la capa de negocio; no se guarda en la tabla Productos.
         public decimal UltimoPrecioCompra { get; set; }
 
-        // false si el producto todavía no se compró nunca: no tiene precio y no se puede vender.
         public bool TieneCompras { get; set; }
 
         public bool Activo { get; set; } = true;

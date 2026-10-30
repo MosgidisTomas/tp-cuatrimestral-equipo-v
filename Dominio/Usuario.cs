@@ -13,8 +13,6 @@ namespace Dominio
         public string Nombre { get; set; }
         public string Apellido { get; set; }
 
-        // Hash SHA-256 de la contraseña (64 caracteres hexadecimales en minúsculas).
-        // Nunca guarda la contraseña en texto plano.
         public string PasswordHash { get; set; }
         public string Email { get; set; }
         public TipoPerfil Perfil { get; set; }

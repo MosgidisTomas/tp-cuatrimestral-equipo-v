@@ -34,10 +34,6 @@ namespace Negocio
 
                 return lista;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -63,10 +59,6 @@ namespace Negocio
                 }
                 return aux;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -81,10 +73,6 @@ namespace Negocio
                 datos.setearConsulta("INSERT INTO Categorias (Descripcion) VALUES (@Descripcion)");
                 datos.setearParametro("@Descripcion", nueva.Descripcion);
                 datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -102,10 +90,6 @@ namespace Negocio
                 datos.setearParametro("@Id", categoria.Id);
                 datos.ejecutarAccion();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -121,10 +105,6 @@ namespace Negocio
                 datos.setearParametro("@Id", id);
                 datos.ejecutarAccion();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -139,10 +119,6 @@ namespace Negocio
                 datos.setearConsulta("UPDATE Categorias SET Activo = 1 WHERE Id = @Id");
                 datos.setearParametro("@Id", id);
                 datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -160,10 +136,6 @@ namespace Negocio
                 datos.setearParametro("@Id", idExcluir);
                 int cantidad = Convert.ToInt32(datos.ejecutarAccionEscalar());
                 return cantidad > 0;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {

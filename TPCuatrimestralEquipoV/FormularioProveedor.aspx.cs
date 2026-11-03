@@ -25,10 +25,17 @@ namespace TPCuatrimestralEquipoV
             {
                 if (!IsPostBack && EsModificacion)
                 {
-                    ProveedorNegocio negocio = new ProveedorNegocio();
-                    Proveedor seleccionado = negocio.buscarPorId(int.Parse(Request.QueryString["id"]));
+                    int id;
+                    Proveedor seleccionado = null;
+                    if (int.TryParse(Request.QueryString["id"], out id))
+                        seleccionado = new ProveedorNegocio().buscarPorId(id);
 
-                    if (seleccionado != null)
+                    if (seleccionado == null)
+                    {
+                        Response.Redirect("Proveedores.aspx", false);
+                        return;
+                    }
+                    else
                     {
                         lblTitulo.Text = "Editar proveedor";
                         txtId.Text = seleccionado.Id.ToString();

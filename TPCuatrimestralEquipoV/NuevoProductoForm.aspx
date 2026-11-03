@@ -15,7 +15,7 @@
 
                 <div class="col-md-4">
                     <asp:Label runat="server" AssociatedControlID="txtCodigo" CssClass="form-label" Text="Código *" />
-                    <asp:TextBox ID="txtCodigo" runat="server" CssClass="form-control" MaxLength="50" />
+                    <asp:TextBox ID="txtCodigo" runat="server" CssClass="form-control" MaxLength="20" />
                 </div>
                 <div class="col-md-8">
                     <asp:Label runat="server" AssociatedControlID="txtNombre" CssClass="form-label" Text="Nombre *" />
@@ -24,12 +24,12 @@
 
                 <div class="col-12">
                     <asp:Label runat="server" AssociatedControlID="txtDescripcion" CssClass="form-label" Text="Descripción" />
-                    <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control" />
+                    <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control" MaxLength="500" />
                 </div>
 
                 <div class="col-12">
                     <asp:Label runat="server" AssociatedControlID="txtUrlImagen" CssClass="form-label" Text="URL de imagen" />
-                    <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" />
+                    <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" MaxLength="500" />
                 </div>
 
                 <div class="col-md-6">
@@ -41,17 +41,13 @@
                     <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" />
                 </div>
 
-                <div class="col-md-4">
-                    <asp:Label runat="server" AssociatedControlID="txtStockActual" CssClass="form-label" Text="Stock inicial" />
-                    <asp:TextBox ID="txtStockActual" runat="server" TextMode="Number" CssClass="form-control" Text="0" />
-                </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <asp:Label runat="server" AssociatedControlID="txtStockMinimo" CssClass="form-label" Text="Stock mínimo" />
                     <asp:TextBox ID="txtStockMinimo" runat="server" TextMode="Number" CssClass="form-control" Text="0" />
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <asp:Label runat="server" AssociatedControlID="txtGanancia" CssClass="form-label" Text="Ganancia (%) *" />
-                    <asp:TextBox ID="txtGanancia" runat="server" CssClass="form-control" placeholder="Ej: 25" />
+                    <asp:TextBox ID="txtGanancia" runat="server" CssClass="form-control" MaxLength="6" placeholder="Ej: 25" />
                 </div>
 
                 <div class="col-12">

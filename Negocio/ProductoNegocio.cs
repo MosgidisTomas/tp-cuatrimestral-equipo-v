@@ -10,74 +10,31 @@ namespace Negocio
 {
     public class ProductoNegocio
     {
-        public List<Producto> listar(bool Activo = true)
+        public List<Producto> listar(bool soloActivos = true)
         {
             List<Producto> lista = new List<Producto>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                string consulta = @"SELECT P.Id,
-                                   P.Codigo,
-                                   P.Nombre,
-                                   P.Descripcion,
-                                   P.UrlImagen,
-                                   P.StockActual,
-                                   P.StockMinimo,
-                                   P.Activo,
-                                   P.IdMarca,
-                                   M.Descripcion AS Marca,
-                                   P.IdCategoria,
-                                   C.Descripcion AS Categoria
-                            FROM Productos P
-                            INNER JOIN Marcas M ON M.Id = P.IdMarca
-                            INNER JOIN Categorias C ON C.Id = P.IdCategoria";
-
-                if (Activo)
+                string consulta = ConsultaBase;
+                if (soloActivos)
                     consulta += " WHERE P.Activo = 1";
-
                 consulta += " ORDER BY P.Nombre";
 
                 datos.setearConsulta(consulta);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
-                {
-                    Producto aux = new Producto();
-                    aux.Id = (int)datos.Lector["Id"];
-                    aux.Codigo = (string)datos.Lector["Codigo"];
-                    aux.Nombre = (string)datos.Lector["Nombre"];
-                    aux.StockActual = (int)datos.Lector["StockActual"];
-                    aux.StockMinimo = (int)datos.Lector["StockMinimo"];
-                    aux.Activo = (bool)datos.Lector["Activo"];
-
-                    
-                    if (!(datos.Lector["Descripcion"] is DBNull))
-                        aux.Descripcion = (string)datos.Lector["Descripcion"];
-                    if (!(datos.Lector["UrlImagen"] is DBNull))
-                        aux.UrlImagen = (string)datos.Lector["UrlImagen"];
-
-                    aux.Marca = new Marca();
-                    aux.Marca.Id = (int)datos.Lector["IdMarca"];
-                    aux.Marca.Descripcion = (string)datos.Lector["Marca"];
-
-                    aux.Categoria = new Categoria();
-                    aux.Categoria.Id = (int)datos.Lector["IdCategoria"];
-                    aux.Categoria.Descripcion = (string)datos.Lector["Categoria"];
-
-                    lista.Add(aux);
-                }
+                    lista.Add(mapear(datos.Lector));
 
                 return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
                 datos.cerrarConexion();
             }
         }
+
         public void agregar(Producto nuevo)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -88,11 +45,11 @@ namespace Negocio
                 
                 datos.setearConsulta(@"INSERT INTO Productos
                     (Codigo, Nombre, Descripcion, UrlImagen, IdMarca, IdCategoria,
-                    StockActual, StockMinimo, PorcentajeGananacia, Activo)
+                    StockActual, StockMinimo, PorcentajeGanancia, Activo)
                 OUTPUT INSERTED.Id
                 VALUES
                     (@codigo, @nombre, @descripcion, @urlImagen, @idMarca, @idCategoria,
-                     @stockActual, @stockMinimo, @porcentajeGanancia, 1)");
+                     0, @stockMinimo, @porcentajeGanancia, 1)");
 
                 datos.setearParametro("@codigo", nuevo.Codigo);
                 datos.setearParametro("@nombre", nuevo.Nombre);
@@ -100,7 +57,6 @@ namespace Negocio
                 datos.setearParametro("@urlImagen", nuevo.UrlImagen);
                 datos.setearParametro("@idMarca", nuevo.Marca.Id);
                 datos.setearParametro("@idCategoria", nuevo.Categoria.Id);
-                datos.setearParametro("@stockActual", nuevo.StockActual);
                 datos.setearParametro("@stockMinimo", nuevo.StockMinimo);
                 datos.setearParametro("@porcentajeGanancia", nuevo.PorcentajeGanancia);
 

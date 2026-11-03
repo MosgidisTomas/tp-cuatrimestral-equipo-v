@@ -106,10 +106,6 @@ namespace Negocio
                 }
                 return aux;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -127,10 +123,6 @@ namespace Negocio
                 int cantidad = Convert.ToInt32(datos.ejecutarAccionEscalar());
                 return cantidad > 0;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -145,10 +137,6 @@ namespace Negocio
                 datos.setearConsulta("UPDATE Marcas SET Activo = 1 WHERE Id = @Id");
                 datos.setearParametro("@Id", id);
                 datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {

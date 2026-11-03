@@ -72,9 +72,6 @@ namespace TPCuatrimestralEquipoV
             txtStockMinimo.Text = p.StockMinimo.ToString();
             txtGanancia.Text = p.PorcentajeGanancia.ToString(CultureInfo.CurrentCulture);
 
-            txtStockActual.Text = p.StockActual.ToString();
-            txtStockActual.Enabled = false;
-
             seleccionar(ddlMarca, p.Marca.Id);
             seleccionar(ddlCategoria, p.Categoria.Id);
 
@@ -108,17 +105,16 @@ namespace TPCuatrimestralEquipoV
                 }
 
                 decimal ganancia;
-                if (!decimal.TryParse(txtGanancia.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out ganancia) || ganancia < 0)
+                if (!decimal.TryParse(txtGanancia.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out ganancia) || ganancia < 0 || ganancia > 999.99m)
                 {
                     lblError.Text = "El porcentaje de ganancia no es válido.";
                     return;
                 }
 
-                int stockActual, stockMinimo;
-                if (!int.TryParse(txtStockActual.Text, out stockActual) || stockActual < 0 ||
-                    !int.TryParse(txtStockMinimo.Text, out stockMinimo) || stockMinimo < 0)
+                int stockMinimo;
+                if (!int.TryParse(txtStockMinimo.Text, out stockMinimo) || stockMinimo < 0)
                 {
-                    lblError.Text = "Los stocks deben ser números enteros mayores o iguales a 0.";
+                    lblError.Text = "El stock mínimo tiene que ser un número entero mayor o igual a 0.";
                     return;
                 }
 
@@ -130,7 +126,6 @@ namespace TPCuatrimestralEquipoV
                 p.UrlImagen = string.IsNullOrWhiteSpace(txtUrlImagen.Text) ? null : txtUrlImagen.Text.Trim();
                 p.Marca = new Marca { Id = int.Parse(ddlMarca.SelectedValue) };
                 p.Categoria = new Categoria { Id = int.Parse(ddlCategoria.SelectedValue) };
-                p.StockActual = stockActual;
                 p.StockMinimo = stockMinimo;
                 p.PorcentajeGanancia = ganancia;
 

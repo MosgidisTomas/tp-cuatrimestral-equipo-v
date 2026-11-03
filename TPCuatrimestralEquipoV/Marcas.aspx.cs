@@ -24,6 +24,7 @@ namespace TPCuatrimestralEquipoV
         protected void Page_Load(object sender, EventArgs e)
         {
             ConfirmaBaja = false;
+            lblError.Visible = false;
             if (!IsPostBack)
                 cargarMarcas();
         }

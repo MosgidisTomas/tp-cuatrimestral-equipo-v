@@ -93,7 +93,7 @@
                 </main>
 
                 <footer class="pie">
-                    &copy; <%: DateTime.Now.Year %> UTN Hardware · Programación 3 · UTN FRGP
+                    &copy; 2026 UTN Hardware · Programación 3 · UTN FRGP
                 </footer>
             </div>
 

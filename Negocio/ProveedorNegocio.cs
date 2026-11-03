@@ -38,10 +38,6 @@ namespace Negocio
 
                 return lista;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -71,10 +67,6 @@ namespace Negocio
                 }
                 return aux;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -94,10 +86,6 @@ namespace Negocio
                 datos.setearParametro("@Email", nuevo.Email);
                 datos.setearParametro("@Direccion", nuevo.Direccion);
                 datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -120,10 +108,6 @@ namespace Negocio
                 datos.setearParametro("@Id", proveedor.Id);
                 datos.ejecutarAccion();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -139,10 +123,6 @@ namespace Negocio
                 datos.setearParametro("@Id", id);
                 datos.ejecutarAccion();
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -157,10 +137,6 @@ namespace Negocio
                 datos.setearConsulta("UPDATE Proveedores SET Activo = 1 WHERE Id = @Id");
                 datos.setearParametro("@Id", id);
                 datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -178,10 +154,6 @@ namespace Negocio
                 datos.setearParametro("@Id", idExcluir);
                 int cantidad = Convert.ToInt32(datos.ejecutarAccionEscalar());
                 return cantidad > 0;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {

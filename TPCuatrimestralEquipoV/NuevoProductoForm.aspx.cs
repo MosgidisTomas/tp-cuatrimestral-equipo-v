@@ -19,18 +19,37 @@ namespace TPCuatrimestralEquipoV
             }
         }
 
+        public bool EsModificacion { get { return IdProducto > 0; } }
+
+        public bool ProductoActivo
+        {
+            get { return ViewState["ProductoActivo"] != null ? (bool)ViewState["ProductoActivo"] : true; }
+            set { ViewState["ProductoActivo"] = value; }
+        }
+
+        public string NombreSeleccionado
+        {
+            get { return ViewState["NombreSeleccionado"] as string ?? ""; }
+            set { ViewState["NombreSeleccionado"] = value; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) return;
+
+            if (Request.QueryString["id"] != null && !EsModificacion)
+            {
+                Response.Redirect("Productos.aspx", false);
+                return;
+            }
 
             try
             {
                 cargarCombos();
 
-                if (IdProducto > 0)
+                if (EsModificacion)
                     cargarProducto();
             }
-            catch (System.Threading.ThreadAbortException) { throw; }
             catch (Exception ex)
             {
                 lblError.Text = ex.Message;
@@ -60,7 +79,7 @@ namespace TPCuatrimestralEquipoV
             Producto p = negocio.buscarPorId(IdProducto);
             if (p == null)
             {
-                Response.Redirect("Productos.aspx");
+                Response.Redirect("Productos.aspx", false);
                 return;
             }
 
@@ -71,6 +90,8 @@ namespace TPCuatrimestralEquipoV
             txtUrlImagen.Text = p.UrlImagen;
             txtStockMinimo.Text = p.StockMinimo.ToString();
             txtGanancia.Text = p.PorcentajeGanancia.ToString(CultureInfo.CurrentCulture);
+            ProductoActivo = p.Activo;
+            NombreSeleccionado = p.Nombre;
 
             seleccionar(ddlMarca, p.Marca.Id);
             seleccionar(ddlCategoria, p.Categoria.Id);
@@ -93,11 +114,9 @@ namespace TPCuatrimestralEquipoV
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(txtCodigo.Text) || string.IsNullOrWhiteSpace(txtNombre.Text))
-                {
-                    lblError.Text = "El código y el nombre son obligatorios.";
+                if (!Page.IsValid)
                     return;
-                }
+
                 if (ddlMarca.Items.Count == 0 || ddlCategoria.Items.Count == 0)
                 {
                     lblError.Text = "Tiene que haber al menos una marca y una categoría cargadas.";
@@ -105,16 +124,11 @@ namespace TPCuatrimestralEquipoV
                 }
 
                 decimal ganancia;
-                if (!decimal.TryParse(txtGanancia.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out ganancia) || ganancia < 0 || ganancia > 999.99m)
-                {
-                    lblError.Text = "El porcentaje de ganancia no es válido.";
-                    return;
-                }
-
                 int stockMinimo;
-                if (!int.TryParse(txtStockMinimo.Text, out stockMinimo) || stockMinimo < 0)
+                if (!decimal.TryParse(txtGanancia.Text, NumberStyles.Number, CultureInfo.CurrentCulture, out ganancia) ||
+                    !int.TryParse(txtStockMinimo.Text, out stockMinimo))
                 {
-                    lblError.Text = "El stock mínimo tiene que ser un número entero mayor o igual a 0.";
+                    lblError.Text = "Revisá la ganancia y el stock mínimo.";
                     return;
                 }
 
@@ -135,7 +149,7 @@ namespace TPCuatrimestralEquipoV
 
                 if (negocio.existeCodigo(p.Codigo, p.Id))
                 {
-                    lblError.Text = "Ya existe otro producto con ese código.";
+                    cvCodigoRepetido.IsValid = false;
                     return;
                 }
 
@@ -146,6 +160,32 @@ namespace TPCuatrimestralEquipoV
 
                 Response.Redirect("Productos.aspx", false);
                 Context.ApplicationInstance.CompleteRequest();
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = ex.Message;
+            }
+        }
+
+        protected void btnConfirmaBaja_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                negocio.eliminar(IdProducto);
+                Response.Redirect("Productos.aspx", false);
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = ex.Message;
+            }
+        }
+
+        protected void btnReactivar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                negocio.reactivar(IdProducto);
+                Response.Redirect("Productos.aspx", false);
             }
             catch (Exception ex)
             {

@@ -35,9 +35,15 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.WebControls.TextBox txtDescripcion;
 
         /// <summary>
-        /// Control lblErrorFormulario.
+        /// Control rfvDescripcion.
         /// </summary>
-        protected global::System.Web.UI.WebControls.Label lblErrorFormulario;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDescripcion;
+
+        /// <summary>
+        /// Control cvDescripcionRepetida.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.CustomValidator cvDescripcionRepetida;
+
 
         /// <summary>
         /// Control btnLimpiar.
@@ -49,15 +55,7 @@ namespace TPCuatrimestralEquipoV
         /// </summary>
         protected global::System.Web.UI.WebControls.Button btnGuardar;
 
-        /// <summary>
-        /// Control btnBaja.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Button btnBaja;
 
-        /// <summary>
-        /// Control chkConfirmaBaja.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.CheckBox chkConfirmaBaja;
 
         /// <summary>
         /// Control btnConfirmaBaja.

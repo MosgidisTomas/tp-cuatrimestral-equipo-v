@@ -5,7 +5,7 @@
     <div class="encabezado-pagina">
         <div>
             <h1>Proveedores</h1>
-            <p>Empresas a las que se les compra mercadería.</p>
+            <p>Empresas a las que se les compra mercadería. Tocá un proveedor para editarlo.</p>
         </div>
         <asp:Button ID="btnNuevo" runat="server" Text="Nuevo proveedor" CssClass="btn btn-primary" OnClick="btnNuevo_Click" />
     </div>
@@ -26,7 +26,7 @@
 
     <div class="tabla-contenedor">
         <asp:GridView ID="gvProveedores" runat="server" AutoGenerateColumns="false"
-            CssClass="table table-hover tabla" GridLines="None"
+            CssClass="table table-hover tabla tabla-clic" GridLines="None"
             ShowHeaderWhenEmpty="true" EmptyDataText="No hay proveedores para mostrar."
             DataKeyNames="Id"
             OnSelectedIndexChanged="gvProveedores_SelectedIndexChanged">
@@ -35,8 +35,11 @@
                 <asp:BoundField DataField="Cuit" HeaderText="CUIT" />
                 <asp:BoundField DataField="Email" HeaderText="Email" />
                 <asp:BoundField DataField="Telefono" HeaderText="Teléfono" />
-                <asp:CheckBoxField DataField="Activo" HeaderText="Activo" />
-                <asp:CommandField ShowSelectButton="true" SelectText="✏️" HeaderText="Editar" />
+                <asp:TemplateField HeaderText="Estado">
+                    <ItemTemplate>
+                        <span class='<%# (bool)Eval("Activo") ? "badge text-bg-success" : "badge text-bg-secondary" %>'><%# (bool)Eval("Activo") ? "Activo" : "Inactivo" %></span>
+                    </ItemTemplate>
+                </asp:TemplateField>
             </Columns>
         </asp:GridView>
     </div>

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using Dominio;
 using Negocio;
 
@@ -8,8 +8,6 @@ namespace TPCuatrimestralEquipoV
 {
     public partial class Categorias : Page
     {
-        public bool ConfirmaBaja { get; set; }
-
         public int IdCategoria
         {
             get { return ViewState["IdCategoria"] != null ? (int)ViewState["IdCategoria"] : 0; }
@@ -22,12 +20,25 @@ namespace TPCuatrimestralEquipoV
             set { ViewState["CategoriaActiva"] = value; }
         }
 
+        public string NombreSeleccionado
+        {
+            get { return ViewState["NombreSeleccionado"] as string ?? ""; }
+            set { ViewState["NombreSeleccionado"] = value; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            ConfirmaBaja = false;
             lblError.Visible = false;
             if (!IsPostBack)
                 cargarCategorias();
+        }
+
+        protected override void Render(HtmlTextWriter writer)
+        {
+            foreach (GridViewRow fila in gvCategorias.Rows)
+                fila.Attributes["onclick"] = ClientScript.GetPostBackEventReference(new PostBackOptions(gvCategorias, "Select$" + fila.RowIndex), true);
+
+            base.Render(writer);
         }
 
         private void cargarCategorias()
@@ -40,8 +51,7 @@ namespace TPCuatrimestralEquipoV
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
-                lblError.Visible = true;
+                mostrarError(ex);
             }
         }
 
@@ -57,15 +67,15 @@ namespace TPCuatrimestralEquipoV
                 {
                     IdCategoria = seleccionada.Id;
                     CategoriaActiva = seleccionada.Activo;
+                    NombreSeleccionado = seleccionada.Descripcion;
                     txtDescripcion.Text = seleccionada.Descripcion;
                     lblTituloFormulario.Text = "Editar categoría";
-                    lblErrorFormulario.Text = "";
+                    btnLimpiar.Text = "Cancelar";
                 }
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
-                lblError.Visible = true;
+                mostrarError(ex);
             }
         }
 
@@ -73,19 +83,14 @@ namespace TPCuatrimestralEquipoV
         {
             try
             {
-                lblErrorFormulario.Text = "";
-
-                if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
-                {
-                    lblErrorFormulario.Text = "El nombre es obligatorio.";
+                if (!Page.IsValid)
                     return;
-                }
 
                 CategoriaNegocio negocio = new CategoriaNegocio();
 
                 if (negocio.existeDescripcion(txtDescripcion.Text.Trim(), IdCategoria))
                 {
-                    lblErrorFormulario.Text = "Ya existe una categoría con ese nombre.";
+                    cvDescripcionRepetida.IsValid = false;
                     return;
                 }
 
@@ -107,8 +112,7 @@ namespace TPCuatrimestralEquipoV
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
-                lblError.Visible = true;
+                mostrarError(ex);
             }
         }
 
@@ -117,22 +121,10 @@ namespace TPCuatrimestralEquipoV
             limpiarFormulario();
         }
 
-        protected void btnBaja_Click(object sender, EventArgs e)
-        {
-            ConfirmaBaja = true;
-        }
-
         protected void btnConfirmaBaja_Click(object sender, EventArgs e)
         {
             try
             {
-                if (!chkConfirmaBaja.Checked)
-                {
-                    ConfirmaBaja = true;
-                    lblErrorFormulario.Text = "Marcá \"Confirmar baja\" para poder darla de baja.";
-                    return;
-                }
-
                 CategoriaNegocio negocio = new CategoriaNegocio();
                 negocio.eliminar(IdCategoria);
                 limpiarFormulario();
@@ -140,8 +132,7 @@ namespace TPCuatrimestralEquipoV
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
-                lblError.Visible = true;
+                mostrarError(ex);
             }
         }
 
@@ -156,8 +147,7 @@ namespace TPCuatrimestralEquipoV
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
-                lblError.Visible = true;
+                mostrarError(ex);
             }
         }
 
@@ -165,10 +155,17 @@ namespace TPCuatrimestralEquipoV
         {
             IdCategoria = 0;
             CategoriaActiva = true;
+            NombreSeleccionado = "";
             txtDescripcion.Text = "";
             lblTituloFormulario.Text = "Nueva categoría";
-            lblErrorFormulario.Text = "";
+            btnLimpiar.Text = "Limpiar";
             gvCategorias.SelectedIndex = -1;
+        }
+
+        private void mostrarError(Exception ex)
+        {
+            lblError.Text = ex.Message;
+            lblError.Visible = true;
         }
     }
 }

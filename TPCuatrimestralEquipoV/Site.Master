@@ -102,5 +102,30 @@
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
     </asp:PlaceHolder>
+    <script>
+        (function () {
+            function marcarCampo(campo) {
+                if (!campo || !campo.Validators) return;
+                var valido = true;
+                for (var i = 0; i < campo.Validators.length; i++)
+                    if (campo.Validators[i].isvalid === false) valido = false;
+                campo.classList.toggle("is-invalid", !valido);
+            }
+
+            if (typeof ValidatorUpdateDisplay === "function") {
+                var mostrarValidador = ValidatorUpdateDisplay;
+                ValidatorUpdateDisplay = function (validador) {
+                    mostrarValidador(validador);
+                    marcarCampo(document.getElementById(validador.controltovalidate));
+                };
+            }
+
+            window.addEventListener("load", function () {
+                if (typeof Page_Validators === "undefined") return;
+                for (var i = 0; i < Page_Validators.length; i++)
+                    marcarCampo(document.getElementById(Page_Validators[i].controltovalidate));
+            });
+        })();
+    </script>
 </body>
 </html>

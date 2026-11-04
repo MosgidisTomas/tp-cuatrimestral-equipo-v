@@ -9,7 +9,6 @@ namespace TPCuatrimestralEquipoV
 {
     public partial class FormularioProveedor : Page
     {
-        public bool ConfirmaBaja { get; set; }
         public bool EsModificacion { get { return Request.QueryString["id"] != null; } }
 
         public bool ProveedorActivo
@@ -18,9 +17,14 @@ namespace TPCuatrimestralEquipoV
             set { ViewState["ProveedorActivo"] = value; }
         }
 
+        public string NombreSeleccionado
+        {
+            get { return ViewState["NombreSeleccionado"] as string ?? ""; }
+            set { ViewState["NombreSeleccionado"] = value; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            ConfirmaBaja = false;
             try
             {
                 if (!IsPostBack && EsModificacion)
@@ -35,17 +39,16 @@ namespace TPCuatrimestralEquipoV
                         Response.Redirect("Proveedores.aspx", false);
                         return;
                     }
-                    else
-                    {
-                        lblTitulo.Text = "Editar proveedor";
-                        txtId.Text = seleccionado.Id.ToString();
-                        txtCuit.Text = seleccionado.Cuit;
-                        txtRazonSocial.Text = seleccionado.RazonSocial;
-                        txtTelefono.Text = seleccionado.Telefono;
-                        txtEmail.Text = seleccionado.Email;
-                        txtDireccion.Text = seleccionado.Direccion;
-                        ProveedorActivo = seleccionado.Activo;
-                    }
+
+                    lblTitulo.Text = "Editar proveedor";
+                    txtId.Text = seleccionado.Id.ToString();
+                    txtCuit.Text = seleccionado.Cuit;
+                    txtRazonSocial.Text = seleccionado.RazonSocial;
+                    txtTelefono.Text = seleccionado.Telefono;
+                    txtEmail.Text = seleccionado.Email;
+                    txtDireccion.Text = seleccionado.Direccion;
+                    ProveedorActivo = seleccionado.Activo;
+                    NombreSeleccionado = seleccionado.RazonSocial;
                 }
             }
             catch (Exception ex)
@@ -59,32 +62,16 @@ namespace TPCuatrimestralEquipoV
             try
             {
                 lblError.Text = "";
+                if (!Page.IsValid)
+                    return;
+
                 string cuit = txtCuit.Text.Trim().Replace("-", "");
-
-                if (cuit.Length != 11 || !cuit.All(char.IsDigit))
-                {
-                    lblError.Text = "El CUIT tiene que tener 11 números.";
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(txtRazonSocial.Text))
-                {
-                    lblError.Text = "La razón social es obligatoria.";
-                    return;
-                }
-
-                if (txtEmail.Text.Trim() != "" && !txtEmail.Text.Contains("@"))
-                {
-                    lblError.Text = "El email no es válido.";
-                    return;
-                }
-
                 ProveedorNegocio negocio = new ProveedorNegocio();
                 int idProveedor = EsModificacion ? int.Parse(Request.QueryString["id"]) : 0;
 
                 if (negocio.existeCuit(cuit, idProveedor))
                 {
-                    lblError.Text = "Ya existe un proveedor con ese CUIT.";
+                    cvCuitRepetido.IsValid = false;
                     return;
                 }
 
@@ -113,22 +100,10 @@ namespace TPCuatrimestralEquipoV
             }
         }
 
-        protected void btnBaja_Click(object sender, EventArgs e)
-        {
-            ConfirmaBaja = true;
-        }
-
         protected void btnConfirmaBaja_Click(object sender, EventArgs e)
         {
             try
             {
-                if (!chkConfirmaBaja.Checked)
-                {
-                    ConfirmaBaja = true;
-                    lblError.Text = "Marcá \"Confirmar baja\" para poder darlo de baja.";
-                    return;
-                }
-
                 ProveedorNegocio negocio = new ProveedorNegocio();
                 negocio.eliminar(int.Parse(Request.QueryString["id"]));
                 Response.Redirect("Proveedores.aspx", false);

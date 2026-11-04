@@ -50,6 +50,51 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.WebControls.TextBox txtDireccion;
 
         /// <summary>
+        /// Control rfvCuit.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCuit;
+
+        /// <summary>
+        /// Control revCuit.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revCuit;
+
+        /// <summary>
+        /// Control cvCuitRepetido.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvCuitRepetido;
+
+        /// <summary>
+        /// Control rfvRazonSocial.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvRazonSocial;
+
+        /// <summary>
+        /// Control revEmail.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revEmail;
+
+        /// <summary>
         /// Control lblError.
         /// </summary>
         protected global::System.Web.UI.WebControls.Label lblError;
@@ -59,15 +104,7 @@ namespace TPCuatrimestralEquipoV
         /// </summary>
         protected global::System.Web.UI.WebControls.Button btnAceptar;
 
-        /// <summary>
-        /// Control btnBaja.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Button btnBaja;
 
-        /// <summary>
-        /// Control chkConfirmaBaja.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.CheckBox chkConfirmaBaja;
 
         /// <summary>
         /// Control btnConfirmaBaja.

@@ -502,3 +502,16 @@ a {
     text-align: right;
     white-space: nowrap;
 }
+
+/* =========================================================
+   Grillas con filas clickeables y baja de entidades
+   ========================================================= */
+
+.tabla-clic td {
+    cursor: pointer;
+}
+
+.tabla tr.fila-seleccionada > td {
+    --bs-table-accent-bg: #DDF3FA;
+    font-weight: 600;
+}

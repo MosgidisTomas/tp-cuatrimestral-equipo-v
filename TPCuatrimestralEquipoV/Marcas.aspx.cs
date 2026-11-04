@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using Dominio;
 using Negocio;
 
@@ -7,8 +8,6 @@ namespace TPCuatrimestralEquipoV
 {
     public partial class Marcas : Page
     {
-        public bool ConfirmaBaja { get; set; }
-
         public int IdMarca
         {
             get { return ViewState["IdMarca"] != null ? (int)ViewState["IdMarca"] : 0; }
@@ -21,12 +20,25 @@ namespace TPCuatrimestralEquipoV
             set { ViewState["MarcaActiva"] = value; }
         }
 
+        public string NombreSeleccionado
+        {
+            get { return ViewState["NombreSeleccionado"] as string ?? ""; }
+            set { ViewState["NombreSeleccionado"] = value; }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            ConfirmaBaja = false;
             lblError.Visible = false;
             if (!IsPostBack)
                 cargarMarcas();
+        }
+
+        protected override void Render(HtmlTextWriter writer)
+        {
+            foreach (GridViewRow fila in gvMarcas.Rows)
+                fila.Attributes["onclick"] = ClientScript.GetPostBackEventReference(new PostBackOptions(gvMarcas, "Select$" + fila.RowIndex), true);
+
+            base.Render(writer);
         }
 
         private void cargarMarcas()
@@ -39,8 +51,7 @@ namespace TPCuatrimestralEquipoV
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
-                lblError.Visible = true;
+                mostrarError(ex);
             }
         }
 
@@ -56,16 +67,16 @@ namespace TPCuatrimestralEquipoV
                 {
                     IdMarca = seleccionada.Id;
                     MarcaActiva = seleccionada.Activo;
+                    NombreSeleccionado = seleccionada.Descripcion;
                     txtDescripcion.Text = seleccionada.Descripcion;
                     txtPaisOrigen.Text = seleccionada.PaisOrigen;
                     lblTituloFormulario.Text = "Editar marca";
-                    lblErrorFormulario.Text = "";
+                    btnLimpiar.Text = "Cancelar";
                 }
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
-                lblError.Visible = true;
+                mostrarError(ex);
             }
         }
 
@@ -73,19 +84,14 @@ namespace TPCuatrimestralEquipoV
         {
             try
             {
-                lblErrorFormulario.Text = "";
-
-                if (string.IsNullOrWhiteSpace(txtDescripcion.Text))
-                {
-                    lblErrorFormulario.Text = "El nombre es obligatorio.";
+                if (!Page.IsValid)
                     return;
-                }
 
                 MarcaNegocio negocio = new MarcaNegocio();
 
                 if (negocio.existeDescripcion(txtDescripcion.Text.Trim(), IdMarca))
                 {
-                    lblErrorFormulario.Text = "Ya existe una marca con ese nombre.";
+                    cvDescripcionRepetida.IsValid = false;
                     return;
                 }
 
@@ -108,8 +114,7 @@ namespace TPCuatrimestralEquipoV
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
-                lblError.Visible = true;
+                mostrarError(ex);
             }
         }
 
@@ -118,22 +123,10 @@ namespace TPCuatrimestralEquipoV
             limpiarFormulario();
         }
 
-        protected void btnBaja_Click(object sender, EventArgs e)
-        {
-            ConfirmaBaja = true;
-        }
-
         protected void btnConfirmaBaja_Click(object sender, EventArgs e)
         {
             try
             {
-                if (!chkConfirmaBaja.Checked)
-                {
-                    ConfirmaBaja = true;
-                    lblErrorFormulario.Text = "Marcá \"Confirmar baja\" para poder darla de baja.";
-                    return;
-                }
-
                 MarcaNegocio negocio = new MarcaNegocio();
                 negocio.eliminar(IdMarca);
                 limpiarFormulario();
@@ -141,8 +134,7 @@ namespace TPCuatrimestralEquipoV
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
-                lblError.Visible = true;
+                mostrarError(ex);
             }
         }
 
@@ -157,8 +149,7 @@ namespace TPCuatrimestralEquipoV
             }
             catch (Exception ex)
             {
-                lblError.Text = ex.Message;
-                lblError.Visible = true;
+                mostrarError(ex);
             }
         }
 
@@ -166,11 +157,18 @@ namespace TPCuatrimestralEquipoV
         {
             IdMarca = 0;
             MarcaActiva = true;
+            NombreSeleccionado = "";
             txtDescripcion.Text = "";
             txtPaisOrigen.Text = "";
             lblTituloFormulario.Text = "Nueva marca";
-            lblErrorFormulario.Text = "";
+            btnLimpiar.Text = "Limpiar";
             gvMarcas.SelectedIndex = -1;
+        }
+
+        private void mostrarError(Exception ex)
+        {
+            lblError.Text = ex.Message;
+            lblError.Visible = true;
         }
     }
 }

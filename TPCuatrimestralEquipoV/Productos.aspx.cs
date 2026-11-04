@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dominio;
 using Negocio;
@@ -13,11 +14,27 @@ namespace TPCuatrimestralEquipoV
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            lblError.Visible = false;
             if (!IsPostBack)
             {
-                cargarFiltros();
-                cargarGrilla();
+                try
+                {
+                    cargarFiltros();
+                    cargarGrilla();
+                }
+                catch (Exception ex)
+                {
+                    mostrarError(ex);
+                }
             }
+        }
+
+        protected override void Render(HtmlTextWriter writer)
+        {
+            foreach (GridViewRow fila in gvProductos.Rows)
+                fila.Attributes["onclick"] = ClientScript.GetPostBackEventReference(new PostBackOptions(gvProductos, "Select$" + fila.RowIndex), true);
+
+            base.Render(writer);
         }
 
         private void cargarFiltros()
@@ -31,7 +48,6 @@ namespace TPCuatrimestralEquipoV
             ddlMarca.DataValueField = "Id";
             ddlMarca.DataTextField = "Descripcion";
             ddlMarca.DataBind();
-            
         }
 
         private void cargarGrilla()
@@ -69,7 +85,7 @@ namespace TPCuatrimestralEquipoV
             }
             catch (Exception ex)
             {
-                Response.Write("<script>alert('" + ex.Message.Replace("'", "") + "');</script>");
+                mostrarError(ex);
             }
         }
 
@@ -80,37 +96,13 @@ namespace TPCuatrimestralEquipoV
 
         protected void btnNuevo_Click(object sender, EventArgs e)
         {
-            Response.Redirect("NuevoProductoForm.aspx");
+            Response.Redirect("NuevoProductoForm.aspx", false);
         }
 
-        protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void gvProductos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (e.CommandArgument == null) return;
-            int id;
-            if (!int.TryParse(e.CommandArgument.ToString(), out id)) return;
-
-            try
-            {
-                switch (e.CommandName)
-                {
-                    case "Editar":
-                        Response.Redirect("NuevoProductoForm.aspx?id=" + id);
-                        break;
-                    case "Baja":
-                        negocio.eliminar(id);
-                        cargarGrilla();
-                        break;
-                    case "Reactivar":
-                        negocio.reactivar(id);
-                        cargarGrilla();
-                        break;
-                }
-            }
-            catch (System.Threading.ThreadAbortException) { throw; }
-            catch (Exception ex)
-            {
-                Response.Write("<script>alert('" + ex.Message.Replace("'", "") + "');</script>");
-            }
+            string id = gvProductos.SelectedDataKey.Value.ToString();
+            Response.Redirect("NuevoProductoForm.aspx?id=" + id, false);
         }
 
         protected void gvProductos_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -123,6 +115,12 @@ namespace TPCuatrimestralEquipoV
                 if (!p.Activo)
                     e.Row.CssClass = "text-muted";
             }
+        }
+
+        private void mostrarError(Exception ex)
+        {
+            lblError.Text = ex.Message;
+            lblError.Visible = true;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.UI;
+using System.Web.UI.WebControls;
 using Dominio;
 using Negocio;
 
@@ -13,6 +14,14 @@ namespace TPCuatrimestralEquipoV
             lblError.Visible = false;
             if (!IsPostBack)
                 cargarProveedores();
+        }
+
+        protected override void Render(HtmlTextWriter writer)
+        {
+            foreach (GridViewRow fila in gvProveedores.Rows)
+                fila.Attributes["onclick"] = ClientScript.GetPostBackEventReference(new PostBackOptions(gvProveedores, "Select$" + fila.RowIndex), true);
+
+            base.Render(writer);
         }
 
         private void cargarProveedores()

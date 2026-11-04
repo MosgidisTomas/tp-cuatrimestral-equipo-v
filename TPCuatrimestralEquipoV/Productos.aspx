@@ -5,10 +5,12 @@
     <div class="encabezado-pagina">
         <div>
             <h1>Productos</h1>
-            <p>El precio de venta se calcula con el costo de la última compra más el porcentaje de ganancia.</p>
+            <p>El precio de venta se calcula con el costo de la última compra más el porcentaje de ganancia. Tocá un producto para editarlo.</p>
         </div>
         <asp:Button ID="btnNuevo" runat="server" Text="Nuevo producto" CssClass="btn btn-primary" OnClick="btnNuevo_Click" UseSubmitBehavior="false" />
     </div>
+
+    <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
 
     <asp:Panel ID="pnlFiltros" runat="server" DefaultButton="btnBuscar">
     <div class="tarjeta mb-4">
@@ -33,7 +35,7 @@
                 <asp:Label runat="server" AssociatedControlID="ddlEstado" CssClass="form-label" Text="Estado" />
                 <asp:DropDownList ID="ddlEstado" runat="server" CssClass="form-select" AutoPostBack ="true" OnSelectedIndexChanged="btnBuscar_Click">
                     <asp:ListItem Value="activos" Text="Activos" />
-                    <asp:ListItem Value="inactivos" Text="Dados de baja" />
+                    <asp:ListItem Value="inactivos" Text="Inactivos" />
                     <asp:ListItem Value="todos" Text="Todos" />
                 </asp:DropDownList>
             </div>
@@ -46,9 +48,9 @@
 
     <div class="tabla-contenedor">
         <asp:GridView ID="gvProductos" runat="server" AutoGenerateColumns="false" DataKeyNames="Id"
-            CssClass="table table-hover tabla" GridLines="None"
+            CssClass="table table-hover tabla tabla-clic" GridLines="None"
             ShowHeaderWhenEmpty="true" EmptyDataText="No hay productos para mostrar."
-            OnRowCommand="gvProductos_RowCommand" OnRowDataBound="gvProductos_RowDataBound">
+            OnSelectedIndexChanged="gvProductos_SelectedIndexChanged" OnRowDataBound="gvProductos_RowDataBound">
             <Columns>
                 <asp:BoundField DataField="Codigo" HeaderText="Código" />
                 <asp:BoundField DataField="Nombre" HeaderText="Producto" />
@@ -66,19 +68,6 @@
                 </asp:TemplateField>
                 <asp:BoundField DataField="StockActual" HeaderText="Stock" ItemStyle-CssClass="num" HeaderStyle-CssClass="num" />
                 <asp:BoundField DataField="StockMinimo" HeaderText="Stock mínimo" ItemStyle-CssClass="num" HeaderStyle-CssClass="num" />
-                <asp:TemplateField HeaderText="Acciones">
-                    <ItemTemplate>
-                        <asp:LinkButton ID="lnkEditar" runat="server" Text="Editar" CssClass="btn btn-sm btn-outline-primary"
-                            CommandName="Editar" CommandArgument='<%# Eval("Id") %>' />
-                        <asp:LinkButton ID="lnkBaja" runat="server" Text="Dar de baja" CssClass="btn btn-sm btn-outline-danger"
-                            CommandName="Baja" CommandArgument='<%# Eval("Id") %>'
-                            OnClientClick="return confirm('¿Dar de baja este producto?');"
-                            Visible='<%# (bool)Eval("Activo") %>' />
-                        <asp:LinkButton ID="lnkReactivar" runat="server" Text="Reactivar" CssClass="btn btn-sm btn-outline-success"
-                            CommandName="Reactivar" CommandArgument='<%# Eval("Id") %>'
-                            Visible='<%# !(bool)Eval("Activo") %>' />
-                    </ItemTemplate>
-                </asp:TemplateField>
             </Columns>
         </asp:GridView>
     </div>

@@ -20,6 +20,16 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.WebControls.Button btnNuevo;
 
         /// <summary>
+        /// Control lblError.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
+        /// Control pnlBuscar.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Panel pnlBuscar;
+
+        /// <summary>
         /// Control txtBuscar.
         /// </summary>
         protected global::System.Web.UI.WebControls.TextBox txtBuscar;

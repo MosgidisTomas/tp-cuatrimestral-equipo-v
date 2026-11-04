@@ -27,6 +27,7 @@ namespace TPCuatrimestralEquipoV
                 { "Marcas", lnkMarcas },
                 { "Categorias", lnkCategorias },
                 { "Clientes", lnkClientes },
+                { "FormularioCliente", lnkClientes },
                 { "Proveedores", lnkProveedores },
                 { "FormularioProveedor", lnkProveedores },
                 { "Usuarios", lnkUsuarios }

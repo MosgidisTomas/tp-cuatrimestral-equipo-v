@@ -51,6 +51,24 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.WebControls.TextBox txtCodigo;
 
         /// <summary>
+        /// Control rfvCodigo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCodigo;
+
+        /// <summary>
+        /// Control cvCodigoRepetido.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvCodigoRepetido;
+
+        /// <summary>
         /// Control txtNombre.
         /// </summary>
         /// <remarks>
@@ -58,6 +76,15 @@ namespace TPCuatrimestralEquipoV
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtNombre;
+
+        /// <summary>
+        /// Control rfvNombre.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombre;
 
         /// <summary>
         /// Control txtDescripcion.
@@ -78,6 +105,15 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.WebControls.TextBox txtUrlImagen;
 
         /// <summary>
+        /// Control revUrlImagen.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revUrlImagen;
+
+        /// <summary>
         /// Control ddlMarca.
         /// </summary>
         /// <remarks>
@@ -95,7 +131,6 @@ namespace TPCuatrimestralEquipoV
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlCategoria;
 
-
         /// <summary>
         /// Control txtStockMinimo.
         /// </summary>
@@ -104,60 +139,6 @@ namespace TPCuatrimestralEquipoV
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtStockMinimo;
-
-        /// <summary>
-        /// Control txtGanancia.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtGanancia;
-
-        /// <summary>
-        /// Control lbProveedores.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ListBox lbProveedores;
-
-        /// <summary>
-        /// Control rfvCodigo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCodigo;
-
-        /// <summary>
-        /// Control cvCodigoRepetido.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cvCodigoRepetido;
-
-        /// <summary>
-        /// Control rfvNombre.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNombre;
-
-        /// <summary>
-        /// Control revUrlImagen.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revUrlImagen;
 
         /// <summary>
         /// Control rfvStockMinimo.
@@ -178,6 +159,15 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.WebControls.RangeValidator rvStockMinimo;
 
         /// <summary>
+        /// Control txtGanancia.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtGanancia;
+
+        /// <summary>
         /// Control rfvGanancia.
         /// </summary>
         /// <remarks>
@@ -196,13 +186,31 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.WebControls.RangeValidator rvGanancia;
 
         /// <summary>
-        /// Control rfvProveedores.
+        /// Control cblProveedores.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvProveedores;
+        protected global::System.Web.UI.WebControls.CheckBoxList cblProveedores;
+
+        /// <summary>
+        /// Control cvProveedores.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvProveedores;
+
+        /// <summary>
+        /// Control btnReactivar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnReactivar;
 
         /// <summary>
         /// Control btnGuardar.
@@ -221,14 +229,5 @@ namespace TPCuatrimestralEquipoV
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnConfirmaBaja;
-
-        /// <summary>
-        /// Control btnReactivar.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnReactivar;
     }
 }

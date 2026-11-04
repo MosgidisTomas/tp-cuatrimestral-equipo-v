@@ -59,9 +59,11 @@
                 </div>
 
                 <div class="col-12">
-                    <asp:Label runat="server" AssociatedControlID="lbProveedores" CssClass="form-label" Text="Proveedores * (Ctrl + clic para elegir varios)" />
-                    <asp:ListBox ID="lbProveedores" runat="server" SelectionMode="Multiple" Rows="6" CssClass="form-select" />
-                    <asp:RequiredFieldValidator ID="rfvProveedores" runat="server" ControlToValidate="lbProveedores" ErrorMessage="Elegí al menos un proveedor." Display="Dynamic" CssClass="text-danger small" SetFocusOnError="true" />
+                    <span class="form-label d-block">Proveedores * (a quiénes se les puede comprar)</span>
+                    <div class="lista-casillas">
+                        <asp:CheckBoxList ID="cblProveedores" runat="server" RepeatLayout="Flow" />
+                    </div>
+                    <asp:CustomValidator ID="cvProveedores" runat="server" ClientValidationFunction="validarProveedores" ErrorMessage="Elegí al menos un proveedor." Display="Dynamic" CssClass="text-danger small" />
                 </div>
 
             </div>
@@ -102,5 +104,17 @@
         </div>
     </div>
     <% } %>
+
+    <script>
+        // La llama el CustomValidator cvProveedores (ClientValidationFunction) junto con los demás validadores.
+        // Es válido si hay al menos una casilla marcada en la lista de proveedores.
+        function validarProveedores(source, args) {
+            var casillas = document.querySelectorAll('.lista-casillas input[type="checkbox"]');
+            args.IsValid = false;
+            for (var i = 0; i < casillas.length; i++)
+                if (casillas[i].checked)
+                    args.IsValid = true;
+        }
+    </script>
 
 </asp:Content>

@@ -68,10 +68,10 @@ namespace TPCuatrimestralEquipoV
             ddlCategoria.DataTextField = "Descripcion";
             ddlCategoria.DataBind();
 
-            lbProveedores.DataSource = new ProveedorNegocio().listar();
-            lbProveedores.DataValueField = "Id";
-            lbProveedores.DataTextField = "RazonSocial";
-            lbProveedores.DataBind();
+            cblProveedores.DataSource = new ProveedorNegocio().listar();
+            cblProveedores.DataValueField = "Id";
+            cblProveedores.DataTextField = "RazonSocial";
+            cblProveedores.DataBind();
         }
 
         private void cargarProducto()
@@ -93,21 +93,32 @@ namespace TPCuatrimestralEquipoV
             ProductoActivo = p.Activo;
             NombreSeleccionado = p.Nombre;
 
-            seleccionar(ddlMarca, p.Marca.Id);
-            seleccionar(ddlCategoria, p.Categoria.Id);
+            seleccionar(ddlMarca, p.Marca.Id, p.Marca.Descripcion);
+            seleccionar(ddlCategoria, p.Categoria.Id, p.Categoria.Descripcion);
 
+            // Las listas solo traen proveedores activos. Si el producto está asociado a uno
+            // inactivo, se agrega igual (marcado) para que al guardar no se pierda la asociación.
             foreach (Proveedor prov in p.Proveedores)
             {
-                ListItem item = lbProveedores.Items.FindByValue(prov.Id.ToString());
-                if (item != null) item.Selected = true;
+                ListItem item = cblProveedores.Items.FindByValue(prov.Id.ToString());
+                if (item == null)
+                {
+                    item = new ListItem(prov.RazonSocial + " (inactivo)", prov.Id.ToString());
+                    cblProveedores.Items.Add(item);
+                }
+                item.Selected = true;
             }
         }
 
-        private void seleccionar(DropDownList ddl, int id)
+        private void seleccionar(DropDownList ddl, int id, string descripcion)
         {
             ListItem item = ddl.Items.FindByValue(id.ToString());
-            if (item != null)
-                ddl.SelectedValue = item.Value;
+            if (item == null)
+            {
+                item = new ListItem(descripcion + " (inactiva)", id.ToString());
+                ddl.Items.Add(item);
+            }
+            ddl.SelectedValue = item.Value;
         }
 
         protected void btnGuardar_Click(object sender, EventArgs e)
@@ -143,15 +154,17 @@ namespace TPCuatrimestralEquipoV
                 p.StockMinimo = stockMinimo;
                 p.PorcentajeGanancia = ganancia;
 
-                foreach (ListItem item in lbProveedores.Items)
+                foreach (ListItem item in cblProveedores.Items)
                     if (item.Selected)
                         p.Proveedores.Add(new Proveedor { Id = int.Parse(item.Value) });
 
+                // Se revisan los dos antes de salir, para mostrar todos los errores juntos.
+                if (p.Proveedores.Count == 0)
+                    cvProveedores.IsValid = false;
                 if (negocio.existeCodigo(p.Codigo, p.Id))
-                {
                     cvCodigoRepetido.IsValid = false;
+                if (!Page.IsValid)
                     return;
-                }
 
                 if (p.Id == 0)
                     negocio.agregar(p);
@@ -159,7 +172,6 @@ namespace TPCuatrimestralEquipoV
                     negocio.modificar(p);
 
                 Response.Redirect("Productos.aspx", false);
-                Context.ApplicationInstance.CompleteRequest();
             }
             catch (Exception ex)
             {

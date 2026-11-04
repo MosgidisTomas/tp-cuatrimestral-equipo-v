@@ -24,6 +24,7 @@ namespace TPCuatrimestralEquipoV
                 { "NuevaCompra", lnkNuevaCompra },
                 { "Ventas", lnkVentas },
                 { "Productos", lnkProductos },
+                { "NuevoProductoForm", lnkProductos },
                 { "Marcas", lnkMarcas },
                 { "Categorias", lnkCategorias },
                 { "Clientes", lnkClientes },

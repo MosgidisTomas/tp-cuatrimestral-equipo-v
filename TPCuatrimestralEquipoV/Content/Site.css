@@ -282,10 +282,15 @@ a {
         font-weight: 600;
         letter-spacing: 0.04em;
         text-transform: uppercase;
-        color: var(--uh-texto-suave);
-        background-color: var(--uh-fondo);
-        border-bottom: 1px solid var(--uh-borde);
+        color: #FFFFFF;
+        background-color: var(--uh-marino);
+        border-bottom: 0;
         white-space: nowrap;
+    }
+
+    .tabla.table-hover > tbody > tr:hover > th {
+        color: #FFFFFF;
+        --bs-table-accent-bg: transparent;
     }
 
     .tabla td {

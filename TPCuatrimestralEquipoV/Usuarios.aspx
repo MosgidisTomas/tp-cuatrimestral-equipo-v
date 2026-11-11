@@ -5,74 +5,43 @@
     <div class="encabezado-pagina">
         <div>
             <h1>Usuarios</h1>
-            <p>Quiénes pueden ingresar al sistema y con qué perfil.</p>
+            <p>Quiénes pueden ingresar al sistema y con qué perfil. Tocá un usuario para editarlo.</p>
         </div>
+        <asp:Button ID="btnNuevo" runat="server" Text="Nuevo usuario" CssClass="btn btn-primary" OnClick="btnNuevo_Click" />
     </div>
 
-    <div class="row g-4">
-        <div class="col-lg-8">
-            <div class="tabla-contenedor">
-                <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="false"
-                    CssClass="table table-hover tabla" GridLines="None"
-                    ShowHeaderWhenEmpty="true" EmptyDataText="No hay usuarios para mostrar.">
-                    <Columns>
-                        <asp:BoundField DataField="NombreUsuario" HeaderText="Usuario" />
-                        <asp:BoundField DataField="NombreCompleto" HeaderText="Nombre" />
-                        <asp:BoundField DataField="Email" HeaderText="Email" />
-                        <asp:BoundField DataField="Perfil" HeaderText="Perfil" />
-                        <asp:CheckBoxField DataField="Activo" HeaderText="Activo" ReadOnly="true" />
-                    </Columns>
-                </asp:GridView>
-            </div>
-        </div>
+    <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
 
-        <div class="col-lg-4">
-            <div class="tarjeta">
-                <h2 class="titulo-seccion">Nuevo usuario</h2>
-                <div class="mb-3">
-                    <asp:Label runat="server" AssociatedControlID="txtNombreUsuario" CssClass="form-label" Text="Nombre de usuario *" />
-                    <asp:TextBox ID="txtNombreUsuario" runat="server" CssClass="form-control" MaxLength="30" placeholder="nombre.apellido" />
-                </div>
-                <div class="row g-3 mb-3">
-                    <div class="col-sm-6">
-                        <asp:Label runat="server" AssociatedControlID="txtNombre" CssClass="form-label" Text="Nombre *" />
-                        <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" MaxLength="50" />
-                    </div>
-                    <div class="col-sm-6">
-                        <asp:Label runat="server" AssociatedControlID="txtApellido" CssClass="form-label" Text="Apellido *" />
-                        <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" MaxLength="50" />
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <asp:Label runat="server" AssociatedControlID="txtEmail" CssClass="form-label" Text="Email *" />
-                    <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" CssClass="form-control" MaxLength="100" />
-                </div>
-                <div class="mb-3">
-                    <asp:Label runat="server" AssociatedControlID="ddlPerfil" CssClass="form-label" Text="Perfil *" />
-                    <asp:DropDownList ID="ddlPerfil" runat="server" CssClass="form-select">
-                        <asp:ListItem Value="2" Text="Vendedor" />
-                        <asp:ListItem Value="1" Text="Administrador" />
-                    </asp:DropDownList>
-                </div>
-                <div class="mb-3">
-                    <asp:Label runat="server" AssociatedControlID="txtPassword" CssClass="form-label" Text="Contraseña *" />
-                    <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="form-control" />
-                </div>
-                <div class="mb-3">
-                    <asp:Label runat="server" AssociatedControlID="txtPassword2" CssClass="form-label" Text="Repetir contraseña *" />
-                    <asp:TextBox ID="txtPassword2" runat="server" TextMode="Password" CssClass="form-control" />
-                </div>
-                <div class="form-check mb-2">
-                    <asp:CheckBox ID="chkActivo" runat="server" Checked="true" />
-                    <asp:Label runat="server" AssociatedControlID="chkActivo" CssClass="form-check-label" Text="Usuario activo" />
-                </div>
-                <p class="texto-ayuda">Un usuario inactivo no puede ingresar, pero sus datos se conservan.</p>
-                <div class="acciones mt-0">
-                    <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar" CssClass="btn btn-outline-secondary" />
-                    <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary" />
-                </div>
+    <asp:Panel ID="pnlBuscar" runat="server" CssClass="tarjeta mb-4" DefaultButton="btnBuscar">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-8">
+                <asp:Label runat="server" AssociatedControlID="txtBuscar" CssClass="form-label" Text="Buscar" />
+                <asp:TextBox ID="txtBuscar" runat="server" TextMode="Search" CssClass="form-control" placeholder="Usuario, nombre, apellido o email" />
+            </div>
+            <div class="col-md-2">
+                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary w-100" OnClick="btnBuscar_Click" />
             </div>
         </div>
+    </asp:Panel>
+
+    <div class="tabla-contenedor">
+        <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="false"
+            CssClass="table table-hover tabla tabla-clic" GridLines="None"
+            ShowHeaderWhenEmpty="true" EmptyDataText="No hay usuarios para mostrar."
+            DataKeyNames="Id"
+            OnSelectedIndexChanged="gvUsuarios_SelectedIndexChanged">
+            <Columns>
+                <asp:BoundField DataField="NombreUsuario" HeaderText="Usuario" />
+                <asp:BoundField DataField="NombreCompleto" HeaderText="Nombre" />
+                <asp:BoundField DataField="Email" HeaderText="Email" />
+                <asp:BoundField DataField="Perfil" HeaderText="Perfil" />
+                <asp:TemplateField HeaderText="Estado">
+                    <ItemTemplate>
+                        <span class='<%# (bool)Eval("Activo") ? "badge text-bg-success" : "badge text-bg-secondary" %>'><%# (bool)Eval("Activo") ? "Activo" : "Inactivo" %></span>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
     </div>
 
 </asp:Content>

@@ -31,7 +31,8 @@ namespace TPCuatrimestralEquipoV
                 { "FormularioCliente", lnkClientes },
                 { "Proveedores", lnkProveedores },
                 { "FormularioProveedor", lnkProveedores },
-                { "Usuarios", lnkUsuarios }
+                { "Usuarios", lnkUsuarios },
+                { "FormularioUsuario", lnkUsuarios }
             };
 
             HtmlAnchor opcion;

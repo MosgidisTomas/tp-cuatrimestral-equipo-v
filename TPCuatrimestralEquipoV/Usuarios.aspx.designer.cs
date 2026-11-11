@@ -15,58 +15,33 @@ namespace TPCuatrimestralEquipoV
     {
 
         /// <summary>
+        /// Control btnNuevo.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Button btnNuevo;
+
+        /// <summary>
+        /// Control lblError.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
+        /// Control pnlBuscar.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Panel pnlBuscar;
+
+        /// <summary>
+        /// Control txtBuscar.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.TextBox txtBuscar;
+
+        /// <summary>
+        /// Control btnBuscar.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Button btnBuscar;
+
+        /// <summary>
         /// Control gvUsuarios.
         /// </summary>
         protected global::System.Web.UI.WebControls.GridView gvUsuarios;
-
-        /// <summary>
-        /// Control txtNombreUsuario.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.TextBox txtNombreUsuario;
-
-        /// <summary>
-        /// Control txtNombre.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.TextBox txtNombre;
-
-        /// <summary>
-        /// Control txtApellido.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.TextBox txtApellido;
-
-        /// <summary>
-        /// Control txtEmail.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.TextBox txtEmail;
-
-        /// <summary>
-        /// Control ddlPerfil.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPerfil;
-
-        /// <summary>
-        /// Control txtPassword.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.TextBox txtPassword;
-
-        /// <summary>
-        /// Control txtPassword2.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.TextBox txtPassword2;
-
-        /// <summary>
-        /// Control chkActivo.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.CheckBox chkActivo;
-
-        /// <summary>
-        /// Control btnLimpiar.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Button btnLimpiar;
-
-        /// <summary>
-        /// Control btnGuardar.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Button btnGuardar;
     }
 }

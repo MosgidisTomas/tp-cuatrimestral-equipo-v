@@ -60,6 +60,15 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkVentas;
 
         /// <summary>
+        /// Control lnkCompras.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkCompras;
+
+        /// <summary>
         /// Control lnkProductos.
         /// </summary>
         /// <remarks>
@@ -85,6 +94,15 @@ namespace TPCuatrimestralEquipoV
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkCategorias;
+
+        /// <summary>
+        /// Control lnkReponer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkReponer;
 
         /// <summary>
         /// Control lnkClientes.

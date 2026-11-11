@@ -240,6 +240,32 @@ namespace Negocio
             return aux;
         }
 
+        // Productos activos con stock igual o menor al mínimo, del que más falta al que menos.
+        public List<Producto> listarAReponer()
+        {
+            List<Producto> lista = new List<Producto>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(ConsultaBase +
+                                     " WHERE P.Activo = 1 AND P.StockActual <= P.StockMinimo" +
+                                     " ORDER BY P.StockMinimo - P.StockActual DESC, P.Nombre");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                    lista.Add(mapear(datos.Lector));
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            foreach (Producto producto in lista)
+                producto.Proveedores = listarProveedores(producto.Id);
+
+            return lista;
+        }
+
         public Producto buscarPorId(int id)
         {
             AccesoDatos datos = new AccesoDatos();

@@ -540,3 +540,181 @@ a {
     .lista-casillas label {
         cursor: pointer;
     }
+
+/* =========================================================
+   Login (página sin Site.Master)
+   ========================================================= */
+
+.login {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 100vh;
+}
+
+/* El fondo es el mismo azul del logo, para que la imagen no se note como un recuadro */
+.login-marca {
+    flex: 1 1 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 64px 32px;
+    background-color: #182035;
+    text-align: center;
+}
+
+    .login-marca p {
+        margin: 8px 0 0;
+        max-width: 360px;
+        font-size: 15px;
+        color: #B8C3D6;
+    }
+
+.login-logo {
+    width: 300px;
+    max-width: 80%;
+    height: auto;
+}
+
+.login-lado-formulario {
+    flex: 1 1 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 24px;
+}
+
+.login-tarjeta {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    background-color: #FFFFFF;
+    border: 1px solid var(--uh-borde);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(22, 31, 51, 0.06);
+}
+
+    .login-tarjeta h1 {
+        margin: 0 0 6px;
+        font-size: 26px;
+    }
+
+/* =========================================================
+   Factura imprimible (en blanco y negro)
+   ========================================================= */
+
+.factura-contenedor {
+    max-width: 860px;
+}
+
+.factura-hoja {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 48px;
+    background-color: #FFFFFF;
+    color: #111111;
+    border: 1px solid var(--uh-borde);
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(22, 31, 51, 0.06);
+}
+
+.factura-encabezado {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 2px solid #111111;
+}
+
+.factura-marca {
+    font-family: "Montserrat", "Inter", sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.factura-marca-chica {
+    font-size: 15px;
+    letter-spacing: 0.12em;
+}
+
+.factura-dato-suave {
+    font-size: 13px;
+    color: #555555;
+}
+
+.factura-etiqueta {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #555555;
+}
+
+.factura-cliente {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    font-size: 14px;
+}
+
+.factura-detalle {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+    .factura-detalle th {
+        padding: 10px 8px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #555555;
+        border-bottom: 1px solid #111111;
+    }
+
+    .factura-detalle td {
+        padding: 10px 8px;
+        border-bottom: 1px solid #DDDDDD;
+    }
+
+.factura-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    min-width: 280px;
+    margin-left: auto;
+    padding-top: 14px;
+    border-top: 2px solid #111111;
+}
+
+/* Al imprimir sale solo la hoja de la factura */
+@media print {
+    .menu-lateral,
+    .barra-superior,
+    .pie,
+    .no-imprimir {
+        display: none !important;
+    }
+
+    body,
+    .app,
+    .columna-principal,
+    .contenido {
+        display: block;
+        min-height: 0;
+        max-width: none;
+        padding: 0;
+        background-color: #FFFFFF;
+    }
+
+    .factura-hoja {
+        padding: 0;
+        border: 0;
+        box-shadow: none;
+    }
+}

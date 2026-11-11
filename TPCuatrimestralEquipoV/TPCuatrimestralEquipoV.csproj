@@ -126,13 +126,18 @@
     <Content Include="NuevoProductoForm.aspx" />
     <Content Include="Proveedores.aspx" />
     <Content Include="Usuarios.aspx" />
+    <Content Include="Factura.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="ProductosAReponer.aspx" />
     <Content Include="Ventas.aspx" />
+    <Content Include="Compras.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="NuevaCompra.aspx" />
     <Content Include="NuevaVenta.aspx" />
     <Content Include="Productos.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Content\img\isotipo.png" />
+    <Content Include="Content\img\logo-utn-hardware.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -280,12 +285,40 @@
     <Compile Include="Usuarios.aspx.designer.cs">
       <DependentUpon>Usuarios.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Factura.aspx.cs">
+      <DependentUpon>Factura.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Factura.aspx.designer.cs">
+      <DependentUpon>Factura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ProductosAReponer.aspx.cs">
+      <DependentUpon>ProductosAReponer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductosAReponer.aspx.designer.cs">
+      <DependentUpon>ProductosAReponer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Ventas.aspx.cs">
       <DependentUpon>Ventas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Ventas.aspx.designer.cs">
       <DependentUpon>Ventas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Compras.aspx.cs">
+      <DependentUpon>Compras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Compras.aspx.designer.cs">
+      <DependentUpon>Compras.aspx</DependentUpon>
     </Compile>
     <Compile Include="Marcas.aspx.cs">
       <DependentUpon>Marcas.aspx</DependentUpon>

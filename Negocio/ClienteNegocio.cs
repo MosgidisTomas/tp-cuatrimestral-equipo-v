@@ -54,6 +54,28 @@ namespace Negocio
             }
         }
 
+        // Devuelve null si no hay ningún cliente con ese DNI (sin puntos).
+        public Cliente buscarPorDocumento(string documento)
+        {
+            Cliente aux = null;
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT " + COLUMNAS + " FROM Clientes WHERE Documento = @Documento");
+                datos.setearParametro("@Documento", documento);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    aux = leerCliente(datos);
+
+                return aux;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         private Cliente leerCliente(AccesoDatos datos)
         {
             Cliente aux = new Cliente();

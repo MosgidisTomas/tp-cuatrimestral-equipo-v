@@ -9,14 +9,18 @@
         </div>
     </div>
 
+    <%-- Por ahora la página solo lee de la base: proveedores activos y los productos de cada proveedor.
+         Etapa 3: "Agregar" arma el detalle y "Confirmar compra" la guarda (transacción, stock y movimientos). --%>
+
+    <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
+
     <section class="tarjeta">
         <h2 class="titulo-seccion">Datos de la compra</h2>
         <div class="row g-3">
             <div class="col-md-4">
                 <asp:Label runat="server" AssociatedControlID="ddlProveedor" CssClass="form-label" Text="Proveedor *" />
-                <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-select">
-                    <asp:ListItem Value="" Text="Elegí un proveedor" />
-                </asp:DropDownList>
+                <asp:DropDownList ID="ddlProveedor" runat="server" CssClass="form-select"
+                    AutoPostBack="true" OnSelectedIndexChanged="ddlProveedor_SelectedIndexChanged" />
             </div>
             <div class="col-md-4">
                 <asp:Label runat="server" AssociatedControlID="txtNumeroFactura" CssClass="form-label" Text="Nº de factura del proveedor *" />
@@ -34,9 +38,8 @@
         <div class="row g-3 align-items-end">
             <div class="col-md-5">
                 <asp:Label runat="server" AssociatedControlID="ddlProducto" CssClass="form-label" Text="Producto" />
-                <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-select">
-                    <asp:ListItem Value="" Text="Elegí un producto" />
-                </asp:DropDownList>
+                <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-select"
+                    AutoPostBack="true" OnSelectedIndexChanged="ddlProducto_SelectedIndexChanged" />
             </div>
             <div class="col-sm-4 col-md-2">
                 <asp:Label runat="server" AssociatedControlID="txtCantidad" CssClass="form-label" Text="Cantidad" />
@@ -50,7 +53,11 @@
                 <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-outline-secondary w-100" />
             </div>
         </div>
-        <p class="texto-ayuda mt-2 mb-3">Solo aparecen los productos asociados al proveedor elegido.</p>
+        <%-- Ayudas en una fila aparte, con las mismas columnas que los campos: así no desalinean los campos de arriba. --%>
+        <div class="row gx-3 mt-2 mb-3 texto-ayuda">
+            <div class="col-md-7">Solo aparecen los productos asociados al proveedor elegido.</div>
+            <div class="col-md-3"><asp:Label ID="lblUltimoCosto" runat="server" /></div>
+        </div>
 
         <div class="tabla-contenedor">
             <asp:GridView ID="gvDetalle" runat="server" AutoGenerateColumns="false"

@@ -83,5 +83,20 @@ namespace TPCuatrimestralEquipoV
         /// Control lnkCancelar.
         /// </summary>
         protected global::System.Web.UI.WebControls.HyperLink lnkCancelar;
+
+        /// <summary>
+        /// Control lblError.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
+        /// Control pnlCliente.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Panel pnlCliente;
+
+        /// <summary>
+        /// Control lblClienteMensaje.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblClienteMensaje;
     }
 }

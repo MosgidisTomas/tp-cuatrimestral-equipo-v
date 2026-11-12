@@ -68,5 +68,15 @@ namespace TPCuatrimestralEquipoV
         /// Control btnConfirmar.
         /// </summary>
         protected global::System.Web.UI.WebControls.Button btnConfirmar;
+
+        /// <summary>
+        /// Control lblError.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
+        /// Control lblUltimoCosto.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblUltimoCosto;
     }
 }

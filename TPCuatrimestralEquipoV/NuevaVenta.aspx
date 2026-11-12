@@ -9,20 +9,27 @@
         </div>
     </div>
 
+    <%-- Por ahora la página solo lee de la base: busca el cliente por DNI y muestra los productos que se pueden vender
+         con su precio y su stock. Etapa 3: "Agregar" arma el detalle y "Confirmar venta" la guarda
+         (validación de stock, número de factura, transacción, stock y movimientos). --%>
+
+    <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
+
     <div class="row g-4">
         <div class="col-lg-8">
 
             <section class="tarjeta">
                 <h2 class="titulo-seccion">Cliente</h2>
-                <div class="row g-3 align-items-end">
+                <asp:Panel ID="pnlCliente" runat="server" CssClass="row g-3 align-items-end" DefaultButton="btnBuscarCliente">
                     <div class="col-sm-8 col-md-6">
                         <asp:Label runat="server" AssociatedControlID="txtDocumento" CssClass="form-label" Text="Documento del cliente *" />
                         <asp:TextBox ID="txtDocumento" runat="server" CssClass="form-control" inputmode="numeric" placeholder="Solo números" />
                     </div>
                     <div class="col-sm-4 col-md-3">
-                        <asp:Button ID="btnBuscarCliente" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary w-100" />
+                        <asp:Button ID="btnBuscarCliente" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary w-100" OnClick="btnBuscarCliente_Click" />
                     </div>
-                </div>
+                </asp:Panel>
+                <asp:Label ID="lblClienteMensaje" runat="server" CssClass="d-block mt-2" />
                 <p class="texto-ayuda mt-2 mb-0">
                     ¿No está registrado?
                     <asp:HyperLink ID="lnkNuevoCliente" runat="server" NavigateUrl="~/Clientes" Text="Registrar cliente nuevo" />
@@ -34,9 +41,8 @@
                 <div class="row g-3 align-items-end">
                     <div class="col-md-5">
                         <asp:Label runat="server" AssociatedControlID="ddlProducto" CssClass="form-label" Text="Producto" />
-                        <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-select">
-                            <asp:ListItem Value="" Text="Elegí un producto" />
-                        </asp:DropDownList>
+                        <asp:DropDownList ID="ddlProducto" runat="server" CssClass="form-select"
+                            AutoPostBack="true" OnSelectedIndexChanged="ddlProducto_SelectedIndexChanged" />
                     </div>
                     <div class="col-sm-4 col-md-3">
                         <asp:Label runat="server" AssociatedControlID="txtPrecio" CssClass="form-label" Text="Precio unitario" />

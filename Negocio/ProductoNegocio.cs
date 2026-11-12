@@ -266,6 +266,38 @@ namespace Negocio
             return lista;
         }
 
+        // Productos activos que se le pueden comprar al proveedor (los asociados en ProductoProveedor).
+        public List<Producto> listarPorProveedor(int idProveedor)
+        {
+            List<Producto> lista = new List<Producto>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta(ConsultaBase +
+                                     " INNER JOIN ProductoProveedor PP ON PP.IdProducto = P.Id" +
+                                     " WHERE PP.IdProveedor = @idProveedor AND P.Activo = 1" +
+                                     " ORDER BY P.Nombre");
+                datos.setearParametro("@idProveedor", idProveedor);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                    lista.Add(mapear(datos.Lector));
+
+                return lista;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        // Productos que se pueden vender: activos, con al menos una compra (tienen precio) y con stock.
+        public List<Producto> listarParaVender()
+        {
+            List<Producto> lista = listar(true);
+            return lista.FindAll(x => x.TieneCompras && x.StockActual > 0);
+        }
+
         public Producto buscarPorId(int id)
         {
             AccesoDatos datos = new AccesoDatos();

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Web.UI;
+using Dominio;
+using Negocio;
 
 namespace TPCuatrimestralEquipoV
 {
@@ -15,10 +17,29 @@ namespace TPCuatrimestralEquipoV
             if (!Page.IsValid)
                 return;
 
-            // Etapa 2: solo navegación, todavía no se valida el usuario.
-            // Etapa 3: buscar el usuario por NombreUsuario, comparar UsuarioNegocio.calcularHash(txtPassword.Text)
-            // con PasswordHash, verificar Activo y guardarlo en Session; si no coincide, mostrar lblError.
-            Response.Redirect("~/", false);
+            try
+            {
+                Usuario usuario = new Usuario();
+                usuario.NombreUsuario = txtUsuario.Text.Trim();
+                usuario.PasswordHash = UsuarioNegocio.calcularHash(txtPassword.Text);
+
+                UsuarioNegocio negocio = new UsuarioNegocio();
+                if (negocio.loguear(usuario))
+                {
+                    Session.Add("usuario", usuario);
+                    Response.Redirect("~/", false);
+                }
+                else
+                {
+                    lblError.Text = "Usuario o contraseña incorrectos.";
+                    lblError.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.Message);
+                Response.Redirect("~/Error", false);
+            }
         }
     }
 }

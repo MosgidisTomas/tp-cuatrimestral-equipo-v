@@ -65,8 +65,9 @@
 
                     <span class="menu-seccion">OPERACIONES</span>
                     <a id="lnkNuevaVenta" runat="server" href="~/NuevaVenta" class="menu-opcion">Nueva venta</a>
-                    <a id="lnkNuevaCompra" runat="server" href="~/NuevaCompra" class="menu-opcion">Nueva compra</a>
                     <a id="lnkVentas" runat="server" href="~/Ventas" class="menu-opcion">Ventas y facturas</a>
+                    <% if (EsAdmin) { %>
+                    <a id="lnkNuevaCompra" runat="server" href="~/NuevaCompra" class="menu-opcion">Nueva compra</a>
                     <a id="lnkCompras" runat="server" href="~/Compras" class="menu-opcion">Compras</a>
 
                     <span class="menu-seccion">CATÁLOGO</span>
@@ -74,21 +75,24 @@
                     <a id="lnkMarcas" runat="server" href="~/Marcas" class="menu-opcion">Marcas</a>
                     <a id="lnkCategorias" runat="server" href="~/Categorias" class="menu-opcion">Categorías</a>
                     <a id="lnkReponer" runat="server" href="~/ProductosAReponer" class="menu-opcion">Productos a reponer</a>
+                    <% } %>
 
                     <span class="menu-seccion">CONTACTOS</span>
                     <a id="lnkClientes" runat="server" href="~/Clientes" class="menu-opcion">Clientes</a>
+                    <% if (EsAdmin) { %>
                     <a id="lnkProveedores" runat="server" href="~/Proveedores" class="menu-opcion">Proveedores</a>
 
                     <span class="menu-seccion">ADMINISTRACIÓN</span>
                     <a id="lnkUsuarios" runat="server" href="~/Usuarios" class="menu-opcion">Usuarios</a>
+                    <% } %>
                 </div>
             </nav>
 
             <div class="columna-principal">
                 <header class="barra-superior">
                     <span class="barra-titulo"><%: Page.Title %></span>
-                    <%-- Etapa 3: nombre y perfil del usuario logueado; "Cerrar sesión" hace Session.Clear(). --%>
-                    <a runat="server" href="~/Login" class="btn btn-outline-secondary btn-sm ms-auto">Cerrar sesión</a>
+                    <asp:Label ID="lblUsuario" runat="server" CssClass="small text-muted ms-auto me-3" />
+                    <asp:LinkButton ID="lnkCerrarSesion" runat="server" CssClass="btn btn-outline-secondary btn-sm" CausesValidation="false" OnClick="lnkCerrarSesion_Click">Cerrar sesión</asp:LinkButton>
                 </header>
 
                 <main class="contenido">

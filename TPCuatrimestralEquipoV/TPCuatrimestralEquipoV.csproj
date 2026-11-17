@@ -127,6 +127,7 @@
     <Content Include="Proveedores.aspx" />
     <Content Include="Usuarios.aspx" />
     <Content Include="Factura.aspx" />
+    <Content Include="Error.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ProductosAReponer.aspx" />
     <Content Include="Ventas.aspx" />
@@ -291,6 +292,13 @@
     </Compile>
     <Compile Include="Factura.aspx.designer.cs">
       <DependentUpon>Factura.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

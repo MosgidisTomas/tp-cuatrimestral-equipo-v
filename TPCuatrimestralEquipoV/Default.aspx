@@ -16,6 +16,7 @@
             <span class="acceso-detalle">Facturar a un cliente registrado</span>
         </a>
 
+        <% if (((Dominio.Usuario)Session["usuario"]).EsAdministrador) { %>
         <a class="acceso" runat="server" href="~/NuevaCompra">
             <span class="acceso-icono"><i class="bi bi-box-seam" aria-hidden="true"></i></span>
             <span class="acceso-titulo">Nueva compra</span>
@@ -27,6 +28,7 @@
             <span class="acceso-titulo">Productos</span>
             <span class="acceso-detalle">Catálogo de componentes, precios y stock</span>
         </a>
+        <% } %>
 
         <a class="acceso" runat="server" href="~/Clientes">
             <span class="acceso-icono"><i class="bi bi-person" aria-hidden="true"></i></span>

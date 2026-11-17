@@ -132,6 +132,16 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lnkUsuarios;
 
         /// <summary>
+        /// Control lblUsuario.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblUsuario;
+
+        /// <summary>
+        /// Control lnkCerrarSesion.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.LinkButton lnkCerrarSesion;
+
+        /// <summary>
         /// Control MainContent.
         /// </summary>
         /// <remarks>

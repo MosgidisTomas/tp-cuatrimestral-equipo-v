@@ -186,6 +186,37 @@ namespace Negocio
             }
         }
 
+        public bool loguear(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT Id, Nombre, Apellido, Perfil FROM Usuarios " +
+                                     "WHERE NombreUsuario = @NombreUsuario AND PasswordHash = @PasswordHash AND Activo = 1");
+                datos.setearParametro("@NombreUsuario", usuario.NombreUsuario);
+                datos.setearParametro("@PasswordHash", usuario.PasswordHash);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    usuario.Id = (int)datos.Lector["Id"];
+                    usuario.Nombre = (string)datos.Lector["Nombre"];
+                    usuario.Apellido = (string)datos.Lector["Apellido"];
+                    usuario.Perfil = (TipoPerfil)(int)datos.Lector["Perfil"];
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         // SHA-256 de la contraseña, en hexadecimal y minúsculas (64 caracteres, como la columna PasswordHash).
         // Se usa al crear o cambiar la contraseña y, en la Etapa 3, en el login para comparar.
         public static string calcularHash(string password)

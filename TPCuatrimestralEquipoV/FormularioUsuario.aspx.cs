@@ -102,6 +102,20 @@ namespace TPCuatrimestralEquipoV
                 else
                 {
                     negocio.agregar(usuario, txtPassword.Text);
+
+                    try
+                    {
+                        EmailService emailService = new EmailService();
+                        emailService.armarCorreo(usuario.Email, "Bienvenido a UTN Hardware",
+                            "<h1>Hola " + Server.HtmlEncode(usuario.Nombre) + "</h1>" +
+                            "<br>Ya podés ingresar al sistema con tu usuario <b>" + Server.HtmlEncode(usuario.NombreUsuario) + "</b>.");
+                        emailService.enviarEmail();
+                    }
+                    catch (Exception)
+                    {
+                        lblError.Text = "El usuario se creó, pero no se pudo enviar el mail de bienvenida.";
+                        return;
+                    }
                 }
 
                 Response.Redirect("Usuarios.aspx", false);

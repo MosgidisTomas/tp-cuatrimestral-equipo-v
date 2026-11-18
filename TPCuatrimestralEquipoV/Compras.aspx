@@ -2,18 +2,18 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <%-- Etapa 2: maqueta (listado vacío, como Ventas).
-         Etapa 3: listar las compras de la base con los filtros, y al tocar una fila ver su detalle (productos, cantidades y costos). --%>
-
     <div class="encabezado-pagina">
         <div>
             <h1>Compras</h1>
-            <p>Compras registradas a proveedores, con el costo de cada producto.</p>
+            <p>Compras registradas a proveedores. Tocá una compra para ver su detalle.</p>
         </div>
         <asp:HyperLink ID="lnkNuevaCompra" runat="server" NavigateUrl="~/NuevaCompra" Text="Nueva compra" CssClass="btn btn-primary" />
     </div>
 
-    <div class="tarjeta mb-4">
+    <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
+
+    <%-- Las fechas empiezan vacías: se muestran todas las compras y se filtra solo si se completan. --%>
+    <asp:Panel ID="pnlBuscar" runat="server" CssClass="tarjeta mb-4" DefaultButton="btnBuscar">
         <div class="row g-3 align-items-end">
             <div class="col-sm-6 col-md-3">
                 <asp:Label runat="server" AssociatedControlID="txtDesde" CssClass="form-label" Text="Desde" />
@@ -28,15 +28,17 @@
                 <asp:TextBox ID="txtProveedor" runat="server" TextMode="Search" CssClass="form-control" placeholder="Razón social o CUIT" />
             </div>
             <div class="col-md-2">
-                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary w-100" />
+                <asp:Button ID="btnBuscar" runat="server" Text="Buscar" CssClass="btn btn-outline-secondary w-100" OnClick="btnBuscar_Click" />
             </div>
         </div>
-    </div>
+    </asp:Panel>
 
     <div class="tabla-contenedor">
         <asp:GridView ID="gvCompras" runat="server" AutoGenerateColumns="false"
-            CssClass="table table-hover tabla" GridLines="None"
-            ShowHeaderWhenEmpty="true" EmptyDataText="No hay compras en el período elegido.">
+            CssClass="table table-hover tabla tabla-clic" GridLines="None"
+            ShowHeaderWhenEmpty="true" EmptyDataText="No hay compras para mostrar."
+            DataKeyNames="Id"
+            OnSelectedIndexChanged="gvCompras_SelectedIndexChanged">
             <Columns>
                 <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
                 <asp:TemplateField HeaderText="Proveedor">

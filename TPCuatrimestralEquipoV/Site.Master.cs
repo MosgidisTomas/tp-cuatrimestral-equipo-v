@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using Dominio;
@@ -10,8 +9,6 @@ namespace TPCuatrimestralEquipoV
 {
     public partial class SiteMaster : MasterPage
     {
-        private static readonly string[] PaginasVendedor = { "Default", "NuevaVenta", "Ventas", "Factura", "Clientes", "FormularioCliente" };
-
         public bool EsAdmin
         {
             get
@@ -24,17 +21,21 @@ namespace TPCuatrimestralEquipoV
         protected void Page_Init(object sender, EventArgs e)
         {
             if (Session["usuario"] == null)
-            {
-                Session.Add("error", "Tenés que iniciar sesión para ingresar.");
-                Response.Redirect("~/Error");
-            }
+                Response.Redirect("~/Login");
 
-            string pagina = Path.GetFileNameWithoutExtension(Request.AppRelativeCurrentExecutionFilePath);
-            if (!EsAdmin && !PaginasVendedor.Contains(pagina))
+            if (!EsAdmin && !EsPaginaDeVendedor())
             {
                 Session.Add("error", "No tenés permisos para ingresar a esta pantalla. Necesitás perfil Administrador.");
                 Response.Redirect("~/Error");
             }
+        }
+
+        // Pantallas a las que puede entrar el vendedor. Se pregunta por el tipo de la página
+        // (como hace el profe con "Page is Login"), así no depende de cómo está escrita la URL.
+        private bool EsPaginaDeVendedor()
+        {
+            return Page is _Default || Page is NuevaVenta || Page is Ventas || Page is Factura
+                || Page is Clientes || Page is FormularioCliente;
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -47,7 +48,7 @@ namespace TPCuatrimestralEquipoV
         protected void lnkCerrarSesion_Click(object sender, EventArgs e)
         {
             Session.Clear();
-            Response.Redirect("~/Login", false);
+            Response.Redirect("~/Login");
         }
 
         private void marcarOpcionActiva()
@@ -62,6 +63,7 @@ namespace TPCuatrimestralEquipoV
                 { "Ventas", lnkVentas },
                 { "Factura", lnkVentas },
                 { "Compras", lnkCompras },
+                { "VerCompra", lnkCompras },
                 { "Productos", lnkProductos },
                 { "NuevoProductoForm", lnkProductos },
                 { "Marcas", lnkMarcas },

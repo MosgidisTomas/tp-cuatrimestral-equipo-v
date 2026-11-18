@@ -111,9 +111,11 @@ namespace TPCuatrimestralEquipoV
                             "<br>Ya podés ingresar al sistema con tu usuario <b>" + Server.HtmlEncode(usuario.NombreUsuario) + "</b>.");
                         emailService.enviarEmail();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        lblError.Text = "El usuario se creó, pero no se pudo enviar el mail de bienvenida.";
+                        // El usuario ya está guardado: se desactiva "Guardar" para que no se intente crear de nuevo.
+                        lblError.Text = "El usuario se creó, pero no se pudo enviar el mail de bienvenida (" + ex.Message + "). Tocá \"Cancelar\" para volver al listado.";
+                        btnAceptar.Enabled = false;
                         return;
                     }
                 }

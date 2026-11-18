@@ -132,6 +132,7 @@
     <Content Include="ProductosAReponer.aspx" />
     <Content Include="Ventas.aspx" />
     <Content Include="Compras.aspx" />
+    <Content Include="VerCompra.aspx" />
     <Content Include="Clientes.aspx" />
     <Content Include="NuevaCompra.aspx" />
     <Content Include="NuevaVenta.aspx" />
@@ -327,6 +328,13 @@
     </Compile>
     <Compile Include="Compras.aspx.designer.cs">
       <DependentUpon>Compras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="VerCompra.aspx.cs">
+      <DependentUpon>VerCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="VerCompra.aspx.designer.cs">
+      <DependentUpon>VerCompra.aspx</DependentUpon>
     </Compile>
     <Compile Include="Marcas.aspx.cs">
       <DependentUpon>Marcas.aspx</DependentUpon>

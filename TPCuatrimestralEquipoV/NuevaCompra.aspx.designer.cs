@@ -15,9 +15,19 @@ namespace TPCuatrimestralEquipoV
     {
 
         /// <summary>
+        /// Control lblError.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
         /// Control ddlProveedor.
         /// </summary>
         protected global::System.Web.UI.WebControls.DropDownList ddlProveedor;
+
+        /// <summary>
+        /// Control rfvProveedor.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvProveedor;
 
         /// <summary>
         /// Control txtNumeroFactura.
@@ -25,9 +35,29 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.WebControls.TextBox txtNumeroFactura;
 
         /// <summary>
+        /// Control rfvNumeroFactura.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvNumeroFactura;
+
+        /// <summary>
+        /// Control cvFacturaRepetida.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.CustomValidator cvFacturaRepetida;
+
+        /// <summary>
         /// Control txtFecha.
         /// </summary>
         protected global::System.Web.UI.WebControls.TextBox txtFecha;
+
+        /// <summary>
+        /// Control rfvFecha.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFecha;
+
+        /// <summary>
+        /// Control cvFecha.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.CustomValidator cvFecha;
 
         /// <summary>
         /// Control ddlProducto.
@@ -35,9 +65,24 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.WebControls.DropDownList ddlProducto;
 
         /// <summary>
+        /// Control rfvProducto.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvProducto;
+
+        /// <summary>
         /// Control txtCantidad.
         /// </summary>
         protected global::System.Web.UI.WebControls.TextBox txtCantidad;
+
+        /// <summary>
+        /// Control rfvCantidad.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCantidad;
+
+        /// <summary>
+        /// Control rvCantidad.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.RangeValidator rvCantidad;
 
         /// <summary>
         /// Control txtCosto.
@@ -45,9 +90,24 @@ namespace TPCuatrimestralEquipoV
         protected global::System.Web.UI.WebControls.TextBox txtCosto;
 
         /// <summary>
+        /// Control rfvCosto.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCosto;
+
+        /// <summary>
+        /// Control rvCosto.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.RangeValidator rvCosto;
+
+        /// <summary>
         /// Control btnAgregar.
         /// </summary>
         protected global::System.Web.UI.WebControls.Button btnAgregar;
+
+        /// <summary>
+        /// Control lblUltimoCosto.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblUltimoCosto;
 
         /// <summary>
         /// Control gvDetalle.
@@ -68,15 +128,5 @@ namespace TPCuatrimestralEquipoV
         /// Control btnConfirmar.
         /// </summary>
         protected global::System.Web.UI.WebControls.Button btnConfirmar;
-
-        /// <summary>
-        /// Control lblError.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Label lblError;
-
-        /// <summary>
-        /// Control lblUltimoCosto.
-        /// </summary>
-        protected global::System.Web.UI.WebControls.Label lblUltimoCosto;
     }
 }

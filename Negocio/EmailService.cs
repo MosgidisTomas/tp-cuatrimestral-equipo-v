@@ -17,6 +17,7 @@ namespace Negocio
         public EmailService()
         {
             server = new SmtpClient();
+            server.Timeout = 10000; // 10 segundos (por defecto espera 100) si no se puede conectar a MailTrap.
             server.Credentials = new NetworkCredential(ConfigurationManager.AppSettings["SmtpUsuario"], ConfigurationManager.AppSettings["SmtpPassword"]);
             server.EnableSsl = true;
             server.Port = int.Parse(ConfigurationManager.AppSettings["SmtpPuerto"]);
@@ -35,14 +36,12 @@ namespace Negocio
 
         public void enviarEmail()
         {
-            try
-            {
-                server.Send(email);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            // Sin credenciales (no hay appSettings.local.config) no se intenta conectar: se avisa enseguida.
+            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["SmtpUsuario"]) ||
+                string.IsNullOrEmpty(ConfigurationManager.AppSettings["SmtpPassword"]))
+                throw new InvalidOperationException("No están configuradas las credenciales de MailTrap (SmtpUsuario y SmtpPassword en appSettings.local.config).");
+
+            server.Send(email);
         }
     }
 }

@@ -164,28 +164,6 @@ namespace Negocio
                 datos.cerrarConexion();
             }
         }
-        public void actualizarStock(int idProducto, int cantidad)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta(@"UPDATE Productos
-                               SET StockActual = StockActual + @cantidad
-                               OUTPUT INSERTED.StockActual
-                               WHERE Id = @id
-                                 AND StockActual + @cantidad >= 0");
-                datos.setearParametro("@cantidad", cantidad);
-                datos.setearParametro("@id", idProducto);
-
-                if (datos.ejecutarAccionEscalar() == null)
-                    throw new InvalidOperationException(
-                        "No se pudo actualizar el stock: el producto no existe o el stock resultante sería negativo.");
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
 
         private const string ConsultaBase = @"SELECT P.Id,
                                                      P.Codigo,

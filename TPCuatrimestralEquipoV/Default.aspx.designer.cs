@@ -13,5 +13,99 @@ namespace TPCuatrimestralEquipoV
 
     public partial class _Default
     {
+        /// <summary>
+        /// Control lblError.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
+        /// Control lblVentasHoy.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblVentasHoy;
+
+        /// <summary>
+        /// Control lblVentasHoyDetalle.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblVentasHoyDetalle;
+
+        /// <summary>
+        /// Control lblVentasMes.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblVentasMes;
+
+        /// <summary>
+        /// Control lblVentasMesDetalle.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblVentasMesDetalle;
+
+        /// <summary>
+        /// Control lblComprasMes.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblComprasMes;
+
+        /// <summary>
+        /// Control lblComprasMesDetalle.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblComprasMesDetalle;
+
+        /// <summary>
+        /// Control lblReponer.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblReponer;
+
+        /// <summary>
+        /// Control lblMasVendido.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblMasVendido;
+
+        /// <summary>
+        /// Control lblMasVendidoDetalle.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblMasVendidoDetalle;
+
+        /// <summary>
+        /// Control lblMenosVendido.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblMenosVendido;
+
+        /// <summary>
+        /// Control lblMenosVendidoDetalle.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblMenosVendidoDetalle;
+
+        /// <summary>
+        /// Control lblMejorVendedor.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblMejorVendedor;
+
+        /// <summary>
+        /// Control lblMejorVendedorDetalle.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblMejorVendedorDetalle;
+
+        /// <summary>
+        /// Control lblClientesNuevos.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblClientesNuevos;
+
+        /// <summary>
+        /// Control rptDias.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Repeater rptDias;
+
+        /// <summary>
+        /// Control lblSinVentasTop.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblSinVentasTop;
+
+        /// <summary>
+        /// Control rptMasVendidos.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Repeater rptMasVendidos;
+
+        /// <summary>
+        /// Control gvUltimasVentas.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.GridView gvUltimasVentas;
     }
 }

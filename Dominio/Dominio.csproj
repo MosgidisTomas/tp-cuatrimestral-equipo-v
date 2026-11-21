@@ -43,6 +43,7 @@
     <Compile Include="DetalleCompra.cs" />
     <Compile Include="DetalleVenta.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Estadisticas.cs" />
     <Compile Include="Marca.cs" />
     <Compile Include="MovimientoStock.cs" />
     <Compile Include="Producto.cs" />

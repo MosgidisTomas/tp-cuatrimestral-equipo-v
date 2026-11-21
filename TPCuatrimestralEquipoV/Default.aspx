@@ -1,5 +1,162 @@
 ﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TPCuatrimestralEquipoV._Default" %>
 
+<asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
+    <style>
+        .estadisticas {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .estadistica {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 0;
+            padding: 20px;
+            border-radius: 12px;
+            background-color: #FFFFFF;
+            border: 1px solid var(--uh-borde);
+            color: var(--uh-texto);
+            text-decoration: none;
+        }
+
+            a.estadistica:hover,
+            a.estadistica:focus {
+                border-color: var(--uh-azul);
+                color: var(--uh-texto);
+            }
+
+        .estadistica-etiqueta {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: var(--uh-texto-suave);
+        }
+
+        .estadistica-valor {
+            font-family: "Montserrat", "Inter", sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--uh-texto);
+        }
+
+        .estadistica-texto {
+            font-size: 17px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .estadistica-detalle {
+            font-size: 13px;
+            color: var(--uh-texto-suave);
+        }
+
+        .barra-fila {
+            display: grid;
+            grid-template-columns: 90px minmax(0, 1fr) 130px;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 0;
+        }
+
+        .barra-dia {
+            font-size: 13px;
+            color: var(--uh-texto-suave);
+            text-transform: capitalize;
+        }
+
+        .barra-pista {
+            height: 12px;
+            border-radius: 6px;
+            background-color: var(--uh-fondo);
+            overflow: hidden;
+        }
+
+        .barra-relleno {
+            height: 100%;
+            min-width: 4px;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--uh-cian), var(--uh-azul));
+        }
+
+        .barra-monto {
+            font-size: 13px;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        @media (max-width: 991.98px) {
+            .estadisticas {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 479.98px) {
+            .estadisticas {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .barra-fila {
+                grid-template-columns: 70px minmax(0, 1fr) 105px;
+            }
+        }
+
+        .estadistica {
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+            .estadistica:hover {
+                box-shadow: 0 6px 18px rgba(22, 31, 51, 0.08);
+            }
+
+        .estadistica-encabezado {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+
+        .estadistica-icono {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            font-size: 19px;
+            background-color: var(--uh-marino);
+            color: var(--uh-cian);
+        }
+
+        .estadistica-icono-alerta {
+            background-color: #FFF4E0;
+            color: #B7791F;
+        }
+
+        .ranking {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            font-size: 13px;
+            font-weight: 700;
+            background-color: var(--uh-fondo);
+            color: var(--uh-texto);
+        }
+
+        .tabla tr:first-child .ranking {
+            background-color: var(--uh-marino);
+            color: var(--uh-cian);
+        }
+    </style>
+</asp:Content>
+
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="encabezado-pagina">
@@ -35,6 +192,155 @@
             <span class="acceso-titulo">Clientes</span>
             <span class="acceso-detalle">Quienes pueden comprar en la tienda</span>
         </a>
+    </div>
+
+    <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block mt-4" Visible="false" />
+
+    <h2 class="titulo-seccion mt-5">Resumen</h2>
+    <div class="estadisticas">
+        <div class="estadistica">
+            <div class="estadistica-encabezado">
+                <span class="estadistica-etiqueta">VENTAS DE HOY</span>
+                <span class="estadistica-icono"><i class="bi bi-cash-coin" aria-hidden="true"></i></span>
+            </div>
+            <asp:Label ID="lblVentasHoy" runat="server" CssClass="estadistica-valor num" />
+            <asp:Label ID="lblVentasHoyDetalle" runat="server" CssClass="estadistica-detalle" />
+        </div>
+        <% if (EsAdmin) { %>
+        <div class="estadistica">
+            <div class="estadistica-encabezado">
+                <span class="estadistica-etiqueta">VENTAS DEL MES</span>
+                <span class="estadistica-icono"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i></span>
+            </div>
+            <asp:Label ID="lblVentasMes" runat="server" CssClass="estadistica-valor num" />
+            <asp:Label ID="lblVentasMesDetalle" runat="server" CssClass="estadistica-detalle" />
+        </div>
+        <div class="estadistica">
+            <div class="estadistica-encabezado">
+                <span class="estadistica-etiqueta">COMPRAS DEL MES</span>
+                <span class="estadistica-icono"><i class="bi bi-box-seam" aria-hidden="true"></i></span>
+            </div>
+            <asp:Label ID="lblComprasMes" runat="server" CssClass="estadistica-valor num" />
+            <asp:Label ID="lblComprasMesDetalle" runat="server" CssClass="estadistica-detalle" />
+        </div>
+        <a class="estadistica" runat="server" href="~/ProductosAReponer">
+            <div class="estadistica-encabezado">
+                <span class="estadistica-etiqueta">PRODUCTOS A REPONER</span>
+                <span class="estadistica-icono estadistica-icono-alerta"><i class="bi bi-exclamation-triangle" aria-hidden="true"></i></span>
+            </div>
+            <asp:Label ID="lblReponer" runat="server" CssClass="estadistica-valor num" />
+            <span class="estadistica-detalle">En el stock mínimo o por debajo</span>
+        </a>
+        <% } %>
+    </div>
+
+    <% if (EsAdmin) { %>
+    <div class="estadisticas mt-3">
+        <div class="estadistica">
+            <div class="estadistica-encabezado">
+                <span class="estadistica-etiqueta">MÁS VENDIDO DEL MES</span>
+                <span class="estadistica-icono"><i class="bi bi-trophy" aria-hidden="true"></i></span>
+            </div>
+            <asp:Label ID="lblMasVendido" runat="server" CssClass="estadistica-valor estadistica-texto" />
+            <asp:Label ID="lblMasVendidoDetalle" runat="server" CssClass="estadistica-detalle" />
+        </div>
+        <div class="estadistica">
+            <div class="estadistica-encabezado">
+                <span class="estadistica-etiqueta">MENOS VENDIDO DEL MES</span>
+                <span class="estadistica-icono"><i class="bi bi-arrow-down-circle" aria-hidden="true"></i></span>
+            </div>
+            <asp:Label ID="lblMenosVendido" runat="server" CssClass="estadistica-valor estadistica-texto" />
+            <asp:Label ID="lblMenosVendidoDetalle" runat="server" CssClass="estadistica-detalle" />
+        </div>
+        <div class="estadistica">
+            <div class="estadistica-encabezado">
+                <span class="estadistica-etiqueta">MEJOR VENDEDOR DEL MES</span>
+                <span class="estadistica-icono"><i class="bi bi-person-badge" aria-hidden="true"></i></span>
+            </div>
+            <asp:Label ID="lblMejorVendedor" runat="server" CssClass="estadistica-valor estadistica-texto" />
+            <asp:Label ID="lblMejorVendedorDetalle" runat="server" CssClass="estadistica-detalle" />
+        </div>
+        <div class="estadistica">
+            <div class="estadistica-encabezado">
+                <span class="estadistica-etiqueta">CLIENTES NUEVOS DEL MES</span>
+                <span class="estadistica-icono"><i class="bi bi-person-plus" aria-hidden="true"></i></span>
+            </div>
+            <asp:Label ID="lblClientesNuevos" runat="server" CssClass="estadistica-valor num" />
+            <span class="estadistica-detalle">Registrados desde el día 1</span>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-1">
+        <div class="col-lg-7">
+            <section class="tarjeta h-100">
+                <h2 class="titulo-seccion">Ventas de los últimos 7 días</h2>
+                <asp:Repeater ID="rptDias" runat="server">
+                    <ItemTemplate>
+                        <div class="barra-fila">
+                            <span class="barra-dia"><%# Eval("Fecha", "{0:ddd dd/MM}") %></span>
+                            <div class="barra-pista">
+                                <div class="barra-relleno" style='<%# "width:" + Eval("Porcentaje") + "%" %>'></div>
+                            </div>
+                            <span class="barra-monto num"><%# Eval("Total", "{0:C}") %></span>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </section>
+        </div>
+        <div class="col-lg-5">
+            <section class="tarjeta h-100">
+                <h2 class="titulo-seccion">Más vendidos del mes</h2>
+                <asp:Label ID="lblSinVentasTop" runat="server" CssClass="texto-ayuda" Text="Todavía no hay ventas este mes." Visible="false" />
+                <asp:Repeater ID="rptMasVendidos" runat="server">
+                        <HeaderTemplate>
+                            <table class="table tabla mb-0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Producto</th>
+                                    <th class="num">Unidades</th>
+                                    <th class="num">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                        </HeaderTemplate>
+                        <ItemTemplate>
+                            <tr>
+                                <td><span class="ranking"><%# Container.ItemIndex + 1 %></span></td>
+                                <td><%#: Eval("Nombre") %></td>
+                                <td class="num"><%# Eval("Unidades") %></td>
+                                <td class="num"><%# Eval("Total", "{0:C}") %></td>
+                            </tr>
+                        </ItemTemplate>
+                        <FooterTemplate>
+                            </tbody>
+                            </table>
+                        </FooterTemplate>
+                </asp:Repeater>
+            </section>
+        </div>
+    </div>
+    <% } %>
+
+    <h2 class="titulo-seccion mt-5">Últimas ventas</h2>
+    <div class="tabla-contenedor">
+        <asp:GridView ID="gvUltimasVentas" runat="server" AutoGenerateColumns="false"
+            CssClass="table table-hover tabla tabla-clic" GridLines="None"
+            ShowHeaderWhenEmpty="true" EmptyDataText="Todavía no hay ventas."
+            DataKeyNames="Id"
+            OnSelectedIndexChanged="gvUltimasVentas_SelectedIndexChanged">
+            <Columns>
+                <asp:BoundField DataField="NumeroFacturaFormateado" HeaderText="Factura" />
+                <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy HH:mm}" />
+                <asp:TemplateField HeaderText="Cliente">
+                    <ItemTemplate><%#: Eval("Cliente.Apellido") %>, <%#: Eval("Cliente.Nombre") %></ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="Vendedor">
+                    <ItemTemplate><%#: Eval("Usuario.NombreUsuario") %></ItemTemplate>
+                </asp:TemplateField>
+                <asp:BoundField DataField="Total" HeaderText="Total" DataFormatString="{0:C}" ItemStyle-CssClass="num" HeaderStyle-CssClass="num" />
+            </Columns>
+        </asp:GridView>
     </div>
 
 </asp:Content>

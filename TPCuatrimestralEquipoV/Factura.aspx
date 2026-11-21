@@ -2,9 +2,6 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <%-- Etapa 2: maqueta con datos de ejemplo.
-         Etapa 3: se carga la venta real con Factura.aspx?id=<Id de la venta> desde "Ventas y facturas" y al confirmar una venta. --%>
-
     <div class="factura-contenedor">
         <div class="acciones mt-0 mb-2 justify-content-between no-imprimir">
             <a href="Ventas.aspx" class="btn btn-outline-secondary">Volver a ventas</a>
@@ -13,6 +10,8 @@
             </button>
         </div>
         <p class="texto-ayuda no-imprimir">Al imprimir se ocultan el menú, la barra superior y estos botones: sale solo la hoja.</p>
+
+        <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block no-imprimir" Visible="false" />
 
         <article class="factura-hoja">
             <div class="factura-encabezado">
@@ -23,15 +22,15 @@
                 </div>
                 <div class="text-end">
                     <div class="factura-marca factura-titulo">FACTURA</div>
-                    <div class="num fs-5 fw-semibold mt-2">Nº 0001-00000006</div>
-                    <div>Fecha: 28/10/2026</div>
+                    <div class="num fs-5 fw-semibold mt-2">Nº <asp:Label ID="lblNumero" runat="server" /></div>
+                    <div>Fecha: <asp:Label ID="lblFecha" runat="server" /></div>
                 </div>
             </div>
 
             <div class="factura-cliente">
-                <div><span class="factura-etiqueta">CLIENTE</span><br /><strong>Fernández, Laura</strong></div>
-                <div><span class="factura-etiqueta">DNI</span><br /><span class="num">30123456</span></div>
-                <div><span class="factura-etiqueta">EMAIL</span><br />laura.fernandez@mail.example</div>
+                <div><span class="factura-etiqueta">CLIENTE</span><br /><strong><asp:Label ID="lblCliente" runat="server" /></strong></div>
+                <div><span class="factura-etiqueta">DNI</span><br /><asp:Label ID="lblDocumento" runat="server" CssClass="num" /></div>
+                <div><span class="factura-etiqueta">EMAIL</span><br /><asp:Label ID="lblEmail" runat="server" /></div>
             </div>
 
             <table class="factura-detalle">
@@ -44,24 +43,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>AMD Ryzen 5 7600</td>
-                        <td class="num">1</td>
-                        <td class="num">$ 287.500,00</td>
-                        <td class="num">$ 287.500,00</td>
-                    </tr>
-                    <tr>
-                        <td>Kingston Fury Beast 16 GB DDR5</td>
-                        <td class="num">2</td>
-                        <td class="num">$ 78.000,00</td>
-                        <td class="num">$ 156.000,00</td>
-                    </tr>
+                    <asp:Repeater ID="rptDetalle" runat="server">
+                        <ItemTemplate>
+                            <tr>
+                                <td><%#: Eval("Producto.Marca.Descripcion") %> <%#: Eval("Producto.Nombre") %></td>
+                                <td class="num"><%# Eval("Cantidad") %></td>
+                                <td class="num"><%# Eval("PrecioUnitario", "{0:C}") %></td>
+                                <td class="num"><%# Eval("Subtotal", "{0:C}") %></td>
+                            </tr>
+                        </ItemTemplate>
+                    </asp:Repeater>
                 </tbody>
             </table>
 
             <div class="factura-total">
                 <span class="factura-etiqueta">TOTAL</span>
-                <span class="factura-marca num">$ 443.500,00</span>
+                <asp:Label ID="lblTotal" runat="server" CssClass="factura-marca num" />
             </div>
 
             <p class="factura-dato-suave text-center mb-0">Gracias por su compra.</p>

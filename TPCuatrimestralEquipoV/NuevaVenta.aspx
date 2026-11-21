@@ -9,10 +9,6 @@
         </div>
     </div>
 
-    <%-- Por ahora la página solo lee de la base: busca el cliente por DNI y muestra los productos que se pueden vender
-         con su precio y su stock. Etapa 3: "Agregar" arma el detalle y "Confirmar venta" la guarda
-         (validación de stock, número de factura, transacción, stock y movimientos). --%>
-
     <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
 
     <div class="row g-4">
@@ -57,19 +53,24 @@
                         <asp:TextBox ID="txtCantidad" runat="server" TextMode="Number" CssClass="form-control" min="1" />
                     </div>
                     <div class="col-12 col-md-3 ms-md-auto">
-                        <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-outline-secondary w-100" />
+                        <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-outline-secondary w-100" OnClick="btnAgregar_Click" />
                     </div>
                 </div>
 
                 <div class="tabla-contenedor mt-3">
                     <asp:GridView ID="gvDetalle" runat="server" AutoGenerateColumns="false"
                         CssClass="table tabla" GridLines="None"
-                        ShowHeaderWhenEmpty="true" EmptyDataText="Todavía no agregaste productos a la venta.">
+                        ShowHeaderWhenEmpty="true" EmptyDataText="Todavía no agregaste productos a la venta."
+                        OnRowDeleting="gvDetalle_RowDeleting">
                         <Columns>
-                            <asp:BoundField DataField="Producto" HeaderText="Producto" />
+                            <asp:TemplateField HeaderText="Producto">
+                                <ItemTemplate><%#: Eval("Producto.Marca.Descripcion") %> <%#: Eval("Producto.Nombre") %></ItemTemplate>
+                            </asp:TemplateField>
                             <asp:BoundField DataField="Cantidad" HeaderText="Cantidad" ItemStyle-CssClass="num" HeaderStyle-CssClass="num" />
                             <asp:BoundField DataField="PrecioUnitario" HeaderText="Precio unitario" DataFormatString="{0:C}" ItemStyle-CssClass="num" HeaderStyle-CssClass="num" />
                             <asp:BoundField DataField="Subtotal" HeaderText="Subtotal" DataFormatString="{0:C}" ItemStyle-CssClass="num" HeaderStyle-CssClass="num" />
+                            <asp:CommandField ShowDeleteButton="true" DeleteText="Quitar" ButtonType="Button" CausesValidation="false"
+                                ControlStyle-CssClass="btn btn-outline-danger btn-sm" ItemStyle-CssClass="text-end" />
                         </Columns>
                     </asp:GridView>
                 </div>
@@ -87,7 +88,7 @@
                     <span class="resumen-etiqueta">TOTAL</span>
                     <asp:Label ID="lblTotal" runat="server" CssClass="total-monto" Text="$ 0,00" />
                 </div>
-                <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar venta" CssClass="btn btn-cian w-100" />
+                <asp:Button ID="btnConfirmar" runat="server" Text="Confirmar venta" CssClass="btn btn-cian w-100" OnClick="btnConfirmar_Click" />
                 <asp:HyperLink ID="lnkCancelar" runat="server" NavigateUrl="~/" Text="Cancelar" CssClass="text-center d-block" />
             </aside>
         </div>

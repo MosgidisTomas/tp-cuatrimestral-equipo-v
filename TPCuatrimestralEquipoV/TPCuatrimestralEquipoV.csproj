@@ -129,6 +129,7 @@
     <Content Include="Factura.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="RecuperarPassword.aspx" />
     <Content Include="ProductosAReponer.aspx" />
     <Content Include="Ventas.aspx" />
     <Content Include="Compras.aspx" />
@@ -300,6 +301,13 @@
     </Compile>
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RecuperarPassword.aspx.cs">
+      <DependentUpon>RecuperarPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecuperarPassword.aspx.designer.cs">
+      <DependentUpon>RecuperarPassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

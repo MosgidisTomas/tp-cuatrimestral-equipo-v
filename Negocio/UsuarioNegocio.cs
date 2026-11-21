@@ -186,6 +186,51 @@ namespace Negocio
             }
         }
 
+        public Usuario buscarPorEmail(string email)
+        {
+            Usuario aux = null;
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT " + COLUMNAS + " FROM Usuarios WHERE Email = @Email");
+                datos.setearParametro("@Email", email);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                    aux = leerUsuario(datos);
+
+                return aux;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void cambiarPassword(int id, string passwordNueva)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Usuarios SET PasswordHash = @PasswordHash WHERE Id = @Id");
+                datos.setearParametro("@PasswordHash", calcularHash(passwordNueva));
+                datos.setearParametro("@Id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public bool loguear(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();

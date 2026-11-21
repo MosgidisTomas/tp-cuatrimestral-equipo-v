@@ -13,5 +13,45 @@ namespace TPCuatrimestralEquipoV
 
     public partial class Factura
     {
+
+        /// <summary>
+        /// Control lblError.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblError;
+
+        /// <summary>
+        /// Control lblNumero.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblNumero;
+
+        /// <summary>
+        /// Control lblFecha.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblFecha;
+
+        /// <summary>
+        /// Control lblCliente.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblCliente;
+
+        /// <summary>
+        /// Control lblDocumento.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblDocumento;
+
+        /// <summary>
+        /// Control lblEmail.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblEmail;
+
+        /// <summary>
+        /// Control rptDetalle.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Repeater rptDetalle;
+
+        /// <summary>
+        /// Control lblTotal.
+        /// </summary>
+        protected global::System.Web.UI.WebControls.Label lblTotal;
     }
 }

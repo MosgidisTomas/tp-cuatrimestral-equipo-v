@@ -54,8 +54,7 @@
 
                     <asp:Button ID="btnIngresar" runat="server" Text="Ingresar" CssClass="btn btn-primary w-100" OnClick="btnIngresar_Click" />
                     <div class="text-center mt-3">
-                        <%-- Etapa 3: página para recuperar la contraseña por mail. --%>
-                        <a href="#">¿Olvidaste tu contraseña?</a>
+                        <a runat="server" href="~/RecuperarPassword">¿Olvidaste tu contraseña?</a>
                     </div>
                 </asp:Panel>
             </div>

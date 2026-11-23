@@ -44,17 +44,16 @@ namespace Negocio
 
                 
                 datos.setearConsulta(@"INSERT INTO Productos
-                    (Codigo, Nombre, Descripcion, UrlImagen, IdMarca, IdCategoria,
+                    (Codigo, Nombre, Descripcion, IdMarca, IdCategoria,
                     StockActual, StockMinimo, PorcentajeGanancia, Activo)
                 OUTPUT INSERTED.Id
                 VALUES
-                    (@codigo, @nombre, @descripcion, @urlImagen, @idMarca, @idCategoria,
+                    (@codigo, @nombre, @descripcion, @idMarca, @idCategoria,
                      0, @stockMinimo, @porcentajeGanancia, 1)");
 
                 datos.setearParametro("@codigo", nuevo.Codigo);
                 datos.setearParametro("@nombre", nuevo.Nombre);
                 datos.setearParametro("@descripcion", nuevo.Descripcion);
-                datos.setearParametro("@urlImagen", nuevo.UrlImagen);
                 datos.setearParametro("@idMarca", nuevo.Marca.Id);
                 datos.setearParametro("@idCategoria", nuevo.Categoria.Id);
                 datos.setearParametro("@stockMinimo", nuevo.StockMinimo);
@@ -96,7 +95,6 @@ namespace Negocio
                                     Codigo = @codigo,
                                     Nombre = @nombre,
                                     Descripcion = @descripcion,
-                                    UrlImagen = @urlImagen,
                                     IdMarca = @idMarca,
                                     IdCategoria = @idCategoria,
                                     StockMinimo = @stockMinimo,
@@ -106,7 +104,6 @@ namespace Negocio
                 datos.setearParametro("@codigo", producto.Codigo);
                 datos.setearParametro("@nombre", producto.Nombre);
                 datos.setearParametro("@descripcion", producto.Descripcion);
-                datos.setearParametro("@urlImagen", producto.UrlImagen);
                 datos.setearParametro("@idMarca", producto.Marca.Id);
                 datos.setearParametro("@idCategoria", producto.Categoria.Id);
                 datos.setearParametro("@stockMinimo", producto.StockMinimo);
@@ -169,7 +166,6 @@ namespace Negocio
                                                      P.Codigo,
                                                      P.Nombre,
                                                      P.Descripcion,
-                                                     P.UrlImagen,
                                                      P.StockActual,
                                                      P.StockMinimo,
                                                      P.PorcentajeGanancia,
@@ -204,8 +200,6 @@ namespace Negocio
 
             if (!(lector["Descripcion"] is DBNull))
                 aux.Descripcion = (string)lector["Descripcion"];
-            if (!(lector["UrlImagen"] is DBNull))
-                aux.UrlImagen = (string)lector["UrlImagen"];
 
             aux.Marca = new Marca();
             aux.Marca.Id = (int)lector["IdMarca"];

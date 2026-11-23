@@ -10,7 +10,7 @@ namespace Negocio
 {
     public class VentaNegocio
     {
-        private const string ConsultaBase = @"SELECT V.Id,
+        private const string ConsultaBase = @"V.Id,
                                                      V.Fecha,
                                                      V.NumeroFactura,
                                                      C.Id AS IdCliente,
@@ -26,13 +26,39 @@ namespace Negocio
                                               INNER JOIN Clientes C ON C.Id = V.IdCliente
                                               INNER JOIN Usuarios U ON U.Id = V.IdUsuario";
 
-        public List<Venta> listar()
+        public List<Venta> listar(DateTime desde, DateTime hasta)
         {
             List<Venta> lista = new List<Venta>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta(ConsultaBase + " ORDER BY V.Fecha DESC, V.Id DESC");
+                datos.setearConsulta("SELECT " + ConsultaBase + " WHERE V.Fecha >= @desde AND V.Fecha < @hasta ORDER BY V.Fecha DESC, V.Id DESC");
+                datos.setearParametro("@desde", desde.Date);
+                datos.setearParametro("@hasta", hasta.Date.AddDays(1));
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                    lista.Add(leerVenta(datos));
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            foreach (Venta venta in lista)
+                venta.Detalles = listarDetalle(venta.Id);
+
+            return lista;
+        }
+
+        public List<Venta> listarUltimas(int cantidad)
+        {
+            List<Venta> lista = new List<Venta>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT TOP (@cantidad) " + ConsultaBase + " ORDER BY V.Fecha DESC, V.Id DESC");
+                datos.setearParametro("@cantidad", cantidad);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -55,7 +81,7 @@ namespace Negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta(ConsultaBase + " WHERE V.Id = @Id");
+                datos.setearConsulta("SELECT " + ConsultaBase + " WHERE V.Id = @Id");
                 datos.setearParametro("@Id", id);
                 datos.ejecutarLectura();
 
@@ -209,7 +235,6 @@ namespace Negocio
             catch (SqlException ex)
             {
                 datos.cancelarTransaccion();
-                // 2627 y 2601: número de factura repetido (UNIQUE).
                 if (ex.Number == 2627 || ex.Number == 2601)
                     throw new InvalidOperationException("Otra venta se registró al mismo tiempo. Tocá \"Confirmar venta\" de nuevo.");
                 throw;

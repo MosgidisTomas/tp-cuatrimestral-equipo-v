@@ -20,13 +20,15 @@ namespace Negocio
                                               INNER JOIN Proveedores PR ON PR.Id = C.IdProveedor
                                               INNER JOIN Usuarios U ON U.Id = C.IdUsuario";
 
-        public List<Compra> listar()
+        public List<Compra> listar(DateTime desde, DateTime hasta)
         {
             List<Compra> lista = new List<Compra>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta(ConsultaBase + " ORDER BY C.Fecha DESC, C.Id DESC");
+                datos.setearConsulta(ConsultaBase + " WHERE C.Fecha >= @desde AND C.Fecha < @hasta ORDER BY C.Fecha DESC, C.Id DESC");
+                datos.setearParametro("@desde", desde.Date);
+                datos.setearParametro("@hasta", hasta.Date.AddDays(1));
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())

@@ -87,7 +87,6 @@ namespace TPCuatrimestralEquipoV
             txtCodigo.Text = p.Codigo;
             txtNombre.Text = p.Nombre;
             txtDescripcion.Text = p.Descripcion;
-            txtUrlImagen.Text = p.UrlImagen;
             txtStockMinimo.Text = p.StockMinimo.ToString();
             txtGanancia.Text = p.PorcentajeGanancia.ToString(CultureInfo.CurrentCulture);
             ProductoActivo = p.Activo;
@@ -147,7 +146,6 @@ namespace TPCuatrimestralEquipoV
                 p.Codigo = txtCodigo.Text.Trim();
                 p.Nombre = txtNombre.Text.Trim();
                 p.Descripcion = string.IsNullOrWhiteSpace(txtDescripcion.Text) ? null : txtDescripcion.Text.Trim();
-                p.UrlImagen = string.IsNullOrWhiteSpace(txtUrlImagen.Text) ? null : txtUrlImagen.Text.Trim();
                 p.Marca = new Marca { Id = int.Parse(ddlMarca.SelectedValue) };
                 p.Categoria = new Categoria { Id = int.Parse(ddlCategoria.SelectedValue) };
                 p.StockMinimo = stockMinimo;

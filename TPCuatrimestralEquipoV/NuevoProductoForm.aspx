@@ -30,12 +30,6 @@
                     <asp:TextBox ID="txtDescripcion" runat="server" TextMode="MultiLine" Rows="3" CssClass="form-control" MaxLength="500" />
                 </div>
 
-                <div class="col-12">
-                    <asp:Label runat="server" AssociatedControlID="txtUrlImagen" CssClass="form-label" Text="URL de imagen" />
-                    <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" MaxLength="500" />
-                    <asp:RegularExpressionValidator ID="revUrlImagen" runat="server" ControlToValidate="txtUrlImagen" ValidationExpression="^https?://\S+$" ErrorMessage="La URL tiene que empezar con http:// o https://." Display="Dynamic" CssClass="text-danger small" SetFocusOnError="true" />
-                </div>
-
                 <div class="col-md-6">
                     <asp:Label runat="server" AssociatedControlID="ddlMarca" CssClass="form-label" Text="Marca *" />
                     <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select" />

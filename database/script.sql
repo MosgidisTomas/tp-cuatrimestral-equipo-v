@@ -76,7 +76,6 @@ CREATE TABLE Productos (
     Codigo             VARCHAR(20) NOT NULL,
     Nombre             NVARCHAR(100) NOT NULL,
     Descripcion        NVARCHAR(500) NULL,
-    UrlImagen          NVARCHAR(500) NULL,
     IdMarca            INT NOT NULL,
     IdCategoria        INT NOT NULL,
     StockActual        INT NOT NULL DEFAULT 0,
@@ -292,10 +291,10 @@ INSERT INTO ProductoProveedor (IdProducto, IdProveedor) VALUES
 -- Compras de prueba (cargadas por el usuario admin).
 -- El Ryzen 5 7600 tiene dos compras con distinto costo: el precio de venta usa la más reciente.
 INSERT INTO Compras (IdProveedor, IdUsuario, Fecha, NumeroFactura) VALUES
-    (3, 1, '2026-09-20', 'A-0002-00000850'),   -- 1
-    (1, 1, '2026-10-01', 'A-0003-00012801'),   -- 2
-    (2, 1, '2026-10-05', 'B-0001-00004512'),   -- 3
-    (3, 1, '2026-10-10', 'A-0002-00000877');   -- 4
+    (3, 1, DATEADD(DAY, -60, GETDATE()), 'A-0002-00000850'),   -- 1
+    (1, 1, DATEADD(DAY, -50, GETDATE()), 'A-0003-00012801'),   -- 2
+    (2, 1, DATEADD(DAY, -45, GETDATE()), 'B-0001-00004512'),   -- 3
+    (3, 1, DATEADD(DAY, -40, GETDATE()), 'A-0002-00000877');   -- 4
 
 INSERT INTO DetalleCompra (IdCompra, IdProducto, Cantidad, PrecioUnitario) VALUES
     (1, 1,  2, 220000.00),
@@ -307,14 +306,10 @@ INSERT INTO DetalleCompra (IdCompra, IdProducto, Cantidad, PrecioUnitario) VALUE
     (4, 2,  3, 211000.00);
 
 -- Un movimiento de tipo Compra (1) por cada línea de compra.
-INSERT INTO MovimientosStock (IdProducto, Fecha, Tipo, Cantidad, IdCompra) VALUES
-    (1, '2026-09-20', 1,  2, 1),
-    (1, '2026-10-01', 1, 12, 2),
-    (3, '2026-10-01', 1, 24, 2),
-    (6, '2026-10-01', 1,  4, 2),
-    (4, '2026-10-05', 1,  8, 3),
-    (5, '2026-10-05', 1,  3, 3),
-    (2, '2026-10-10', 1,  3, 4);
+INSERT INTO MovimientosStock (IdProducto, Fecha, Tipo, Cantidad, IdCompra)
+SELECT D.IdProducto, C.Fecha, 1, D.Cantidad, D.IdCompra
+FROM DetalleCompra D
+INNER JOIN Compras C ON C.Id = D.IdCompra;
 
 -- Ventas de prueba. Las fechas son relativas al día en que se corre el script,
 -- para que el Inicio muestre estadísticas del mes y de los últimos 7 días.

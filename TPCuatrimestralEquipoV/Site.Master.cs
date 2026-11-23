@@ -53,6 +53,8 @@ namespace TPCuatrimestralEquipoV
         private void marcarOpcionActiva()
         {
             string pagina = Path.GetFileNameWithoutExtension(Request.AppRelativeCurrentExecutionFilePath);
+            if (pagina == "")
+                pagina = "Default";
 
             Dictionary<string, HtmlAnchor> opciones = new Dictionary<string, HtmlAnchor>(StringComparer.OrdinalIgnoreCase)
             {

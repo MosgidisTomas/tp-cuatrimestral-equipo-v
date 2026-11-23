@@ -1,162 +1,5 @@
 ﻿<%@ Page Title="Inicio" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TPCuatrimestralEquipoV._Default" %>
 
-<asp:Content ID="HeadContent" ContentPlaceHolderID="HeadContent" runat="server">
-    <style>
-        .estadisticas {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 16px;
-        }
-
-        .estadistica {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            min-width: 0;
-            padding: 20px;
-            border-radius: 12px;
-            background-color: #FFFFFF;
-            border: 1px solid var(--uh-borde);
-            color: var(--uh-texto);
-            text-decoration: none;
-        }
-
-            a.estadistica:hover,
-            a.estadistica:focus {
-                border-color: var(--uh-azul);
-                color: var(--uh-texto);
-            }
-
-        .estadistica-etiqueta {
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            color: var(--uh-texto-suave);
-        }
-
-        .estadistica-valor {
-            font-family: "Montserrat", "Inter", sans-serif;
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--uh-texto);
-        }
-
-        .estadistica-texto {
-            font-size: 17px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .estadistica-detalle {
-            font-size: 13px;
-            color: var(--uh-texto-suave);
-        }
-
-        .barra-fila {
-            display: grid;
-            grid-template-columns: 90px minmax(0, 1fr) 130px;
-            align-items: center;
-            gap: 12px;
-            padding: 6px 0;
-        }
-
-        .barra-dia {
-            font-size: 13px;
-            color: var(--uh-texto-suave);
-            text-transform: capitalize;
-        }
-
-        .barra-pista {
-            height: 12px;
-            border-radius: 6px;
-            background-color: var(--uh-fondo);
-            overflow: hidden;
-        }
-
-        .barra-relleno {
-            height: 100%;
-            min-width: 4px;
-            border-radius: 6px;
-            background: linear-gradient(90deg, var(--uh-cian), var(--uh-azul));
-        }
-
-        .barra-monto {
-            font-size: 13px;
-            font-weight: 600;
-            text-align: right;
-        }
-
-        @media (max-width: 991.98px) {
-            .estadisticas {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-        }
-
-        @media (max-width: 479.98px) {
-            .estadisticas {
-                grid-template-columns: minmax(0, 1fr);
-            }
-
-            .barra-fila {
-                grid-template-columns: 70px minmax(0, 1fr) 105px;
-            }
-        }
-
-        .estadistica {
-            transition: border-color 0.15s ease, box-shadow 0.15s ease;
-        }
-
-            .estadistica:hover {
-                box-shadow: 0 6px 18px rgba(22, 31, 51, 0.08);
-            }
-
-        .estadistica-encabezado {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 4px;
-        }
-
-        .estadistica-icono {
-            display: flex;
-            flex-shrink: 0;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            font-size: 19px;
-            background-color: var(--uh-marino);
-            color: var(--uh-cian);
-        }
-
-        .estadistica-icono-alerta {
-            background-color: #FFF4E0;
-            color: #B7791F;
-        }
-
-        .ranking {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 26px;
-            height: 26px;
-            border-radius: 50%;
-            font-size: 13px;
-            font-weight: 700;
-            background-color: var(--uh-fondo);
-            color: var(--uh-texto);
-        }
-
-        .tabla tr:first-child .ranking {
-            background-color: var(--uh-marino);
-            color: var(--uh-cian);
-        }
-    </style>
-</asp:Content>
-
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="encabezado-pagina">
@@ -272,19 +115,21 @@
 
     <div class="row g-4 mt-1">
         <div class="col-lg-7">
-            <section class="tarjeta h-100">
+            <section class="tarjeta h-100 d-flex flex-column">
                 <h2 class="titulo-seccion">Ventas de los últimos 7 días</h2>
-                <asp:Repeater ID="rptDias" runat="server">
-                    <ItemTemplate>
-                        <div class="barra-fila">
-                            <span class="barra-dia"><%# Eval("Fecha", "{0:ddd dd/MM}") %></span>
-                            <div class="barra-pista">
-                                <div class="barra-relleno" style='<%# "width:" + Eval("Porcentaje") + "%" %>'></div>
+                <div class="barras">
+                    <asp:Repeater ID="rptDias" runat="server">
+                        <ItemTemplate>
+                            <div class="barra-fila">
+                                <span class="barra-dia"><%# Eval("Fecha", "{0:ddd dd/MM}") %></span>
+                                <div class="barra-pista">
+                                    <div class="barra-relleno" style='<%# "width:" + Eval("Porcentaje") + "%" %>'></div>
+                                </div>
+                                <span class="barra-monto num"><%# Eval("Total", "{0:C}") %></span>
                             </div>
-                            <span class="barra-monto num"><%# Eval("Total", "{0:C}") %></span>
-                        </div>
-                    </ItemTemplate>
-                </asp:Repeater>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
             </section>
         </div>
         <div class="col-lg-5">

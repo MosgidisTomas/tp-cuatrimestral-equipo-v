@@ -13,7 +13,11 @@ namespace TPCuatrimestralEquipoV
         {
             lblError.Visible = false;
             if (!IsPostBack)
+            {
+                txtDesde.Text = DateTime.Today.AddMonths(-3).ToString("yyyy-MM-dd");
+                txtHasta.Text = DateTime.Today.ToString("yyyy-MM-dd");
                 cargarCompras();
+            }
         }
 
         protected override void Render(HtmlTextWriter writer)
@@ -28,26 +32,23 @@ namespace TPCuatrimestralEquipoV
         {
             try
             {
-                CompraNegocio negocio = new CompraNegocio();
-                List<Compra> lista = negocio.listar();
-
+                List<Compra> lista = new List<Compra>();
                 DateTime desde;
                 DateTime hasta;
-                bool hayDesde = DateTime.TryParse(txtDesde.Text, out desde);
-                bool hayHasta = DateTime.TryParse(txtHasta.Text, out hasta);
 
-                if (hayDesde && hayHasta && desde > hasta)
+                if (!DateTime.TryParse(txtDesde.Text, out desde) || !DateTime.TryParse(txtHasta.Text, out hasta))
+                {
+                    lblError.Text = "Completá las fechas \"Desde\" y \"Hasta\".";
+                    lblError.Visible = true;
+                }
+                else if (desde > hasta)
                 {
                     lblError.Text = "La fecha \"Desde\" no puede ser posterior a la fecha \"Hasta\".";
                     lblError.Visible = true;
-                    lista = new List<Compra>();
                 }
                 else
                 {
-                    if (hayDesde)
-                        lista = lista.FindAll(x => x.Fecha >= desde);
-                    if (hayHasta)
-                        lista = lista.FindAll(x => x.Fecha <= hasta);
+                    lista = new CompraNegocio().listar(desde, hasta);
 
                     string filtro = txtProveedor.Text.Trim().ToUpper();
                     if (filtro != "")

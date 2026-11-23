@@ -47,8 +47,7 @@ namespace TPCuatrimestralEquipoV
                 lblVentasHoy.Text = negocio.totalVentas(hoy, manana).ToString("C");
                 lblVentasHoyDetalle.Text = textoCantidad(negocio.cantidadVentas(hoy, manana), "venta", "ventas");
 
-                List<Venta> ultimas = new VentaNegocio().listar();
-                gvUltimasVentas.DataSource = ultimas.Take(5).ToList();
+                gvUltimasVentas.DataSource = new VentaNegocio().listarUltimas(5);
                 gvUltimasVentas.DataBind();
 
                 if (!EsAdmin)

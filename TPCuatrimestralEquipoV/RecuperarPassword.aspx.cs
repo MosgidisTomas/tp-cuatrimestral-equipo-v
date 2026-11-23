@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.Text;
 using System.Web.UI;
 using Dominio;
@@ -57,13 +56,11 @@ namespace TPCuatrimestralEquipoV
         private string generarPassword()
         {
             const string caracteres = "abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-            byte[] bytes = new byte[8];
-            using (RandomNumberGenerator generador = RandomNumberGenerator.Create())
-                generador.GetBytes(bytes);
+            Random random = new Random();
 
             StringBuilder password = new StringBuilder();
-            foreach (byte b in bytes)
-                password.Append(caracteres[b % caracteres.Length]);
+            for (int i = 0; i < 8; i++)
+                password.Append(caracteres[random.Next(caracteres.Length)]);
             return password.ToString();
         }
     }

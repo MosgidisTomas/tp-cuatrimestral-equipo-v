@@ -14,9 +14,8 @@ namespace TPCuatrimestralEquipoV
             lblError.Visible = false;
             if (!IsPostBack)
             {
-                DateTime hoy = DateTime.Today;
-                txtDesde.Text = new DateTime(hoy.Year, hoy.Month, 1).ToString("yyyy-MM-dd");
-                txtHasta.Text = hoy.ToString("yyyy-MM-dd");
+                txtDesde.Text = DateTime.Today.AddMonths(-3).ToString("yyyy-MM-dd");
+                txtHasta.Text = DateTime.Today.ToString("yyyy-MM-dd");
                 cargarVentas();
             }
         }
@@ -33,26 +32,23 @@ namespace TPCuatrimestralEquipoV
         {
             try
             {
-                VentaNegocio negocio = new VentaNegocio();
-                List<Venta> lista = negocio.listar();
-
+                List<Venta> lista = new List<Venta>();
                 DateTime desde;
                 DateTime hasta;
-                bool hayDesde = DateTime.TryParse(txtDesde.Text, out desde);
-                bool hayHasta = DateTime.TryParse(txtHasta.Text, out hasta);
 
-                if (hayDesde && hayHasta && desde > hasta)
+                if (!DateTime.TryParse(txtDesde.Text, out desde) || !DateTime.TryParse(txtHasta.Text, out hasta))
+                {
+                    lblError.Text = "Completá las fechas \"Desde\" y \"Hasta\".";
+                    lblError.Visible = true;
+                }
+                else if (desde > hasta)
                 {
                     lblError.Text = "La fecha \"Desde\" no puede ser posterior a la fecha \"Hasta\".";
                     lblError.Visible = true;
-                    lista = new List<Venta>();
                 }
                 else
                 {
-                    if (hayDesde)
-                        lista = lista.FindAll(x => x.Fecha >= desde);
-                    if (hayHasta)
-                        lista = lista.FindAll(x => x.Fecha < hasta.AddDays(1));
+                    lista = new VentaNegocio().listar(desde, hasta);
 
                     string filtro = txtCliente.Text.Trim().ToUpper();
                     if (filtro != "")

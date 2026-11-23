@@ -20,7 +20,6 @@ namespace TPCuatrimestralEquipoV
                 if (int.TryParse(Request.QueryString["id"], out id))
                     compra = new CompraNegocio().buscarPorId(id);
 
-                // Sin id, con un id inválido o de una compra que no existe: vuelve al listado.
                 if (compra == null)
                 {
                     Response.Redirect("Compras.aspx", false);

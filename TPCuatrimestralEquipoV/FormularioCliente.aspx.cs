@@ -9,6 +9,15 @@ namespace TPCuatrimestralEquipoV
     {
         public bool EsModificacion { get { return Request.QueryString["id"] != null; } }
 
+        public bool EsAdmin
+        {
+            get
+            {
+                Usuario usuario = (Usuario)Session["usuario"];
+                return usuario != null && usuario.EsAdministrador;
+            }
+        }
+
         public bool ClienteActivo
         {
             get { return ViewState["ClienteActivo"] != null ? (bool)ViewState["ClienteActivo"] : true; }
@@ -70,7 +79,6 @@ namespace TPCuatrimestralEquipoV
                 ClienteNegocio negocio = new ClienteNegocio();
                 int idCliente = EsModificacion ? int.Parse(Request.QueryString["id"]) : 0;
 
-                // Se revisan los dos antes de salir, para mostrar todos los errores juntos.
                 if (negocio.existeDocumento(documento, idCliente))
                     cvDocumentoRepetido.IsValid = false;
                 if (negocio.existeEmail(email, idCliente))
@@ -106,6 +114,9 @@ namespace TPCuatrimestralEquipoV
 
         protected void btnConfirmaBaja_Click(object sender, EventArgs e)
         {
+            if (!EsAdmin)
+                return;
+
             try
             {
                 ClienteNegocio negocio = new ClienteNegocio();
@@ -120,6 +131,9 @@ namespace TPCuatrimestralEquipoV
 
         protected void btnReactivar_Click(object sender, EventArgs e)
         {
+            if (!EsAdmin)
+                return;
+
             try
             {
                 ClienteNegocio negocio = new ClienteNegocio();

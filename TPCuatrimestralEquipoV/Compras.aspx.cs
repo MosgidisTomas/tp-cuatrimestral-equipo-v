@@ -31,7 +31,6 @@ namespace TPCuatrimestralEquipoV
                 CompraNegocio negocio = new CompraNegocio();
                 List<Compra> lista = negocio.listar();
 
-                // Los filtros vacíos no filtran.
                 DateTime desde;
                 DateTime hasta;
                 bool hayDesde = DateTime.TryParse(txtDesde.Text, out desde);

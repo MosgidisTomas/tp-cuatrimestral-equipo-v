@@ -8,7 +8,7 @@ namespace Negocio
 {
     public class UsuarioNegocio
     {
-        // PasswordHash no se trae en los listados: la pantalla nunca lo necesita.
+        // Sin PasswordHash: los listados no lo necesitan.
         private const string COLUMNAS = "Id, NombreUsuario, Nombre, Apellido, Email, Perfil, Activo";
 
         public List<Usuario> listar(bool soloActivos = true)
@@ -70,7 +70,6 @@ namespace Negocio
             return aux;
         }
 
-        // Recibe la contraseña escrita y guarda solo su hash.
         public void agregar(Usuario nuevo, string password)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -92,7 +91,7 @@ namespace Negocio
             }
         }
 
-        // Si passwordNueva viene vacía, la contraseña no se cambia.
+        // Si passwordNueva viene vacía, no se cambia la contraseña.
         public void modificar(Usuario usuario, string passwordNueva)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -201,10 +200,6 @@ namespace Negocio
 
                 return aux;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -220,10 +215,6 @@ namespace Negocio
                 datos.setearParametro("@PasswordHash", calcularHash(passwordNueva));
                 datos.setearParametro("@Id", id);
                 datos.ejecutarAccion();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -252,18 +243,13 @@ namespace Negocio
                 }
                 return false;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
             }
         }
 
-        // SHA-256 de la contraseña, en hexadecimal y minúsculas (64 caracteres, como la columna PasswordHash).
-        // Se usa al crear o cambiar la contraseña y, en la Etapa 3, en el login para comparar.
+        // SHA-256 en hexadecimal (64 caracteres).
         public static string calcularHash(string password)
         {
             using (SHA256 sha = SHA256.Create())

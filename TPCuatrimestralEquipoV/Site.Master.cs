@@ -30,8 +30,7 @@ namespace TPCuatrimestralEquipoV
             }
         }
 
-        // Pantallas a las que puede entrar el vendedor. Se pregunta por el tipo de la página
-        // (como hace el profe con "Page is Login"), así no depende de cómo está escrita la URL.
+        // Pantallas a las que puede entrar el vendedor.
         private bool EsPaginaDeVendedor()
         {
             return Page is _Default || Page is NuevaVenta || Page is Ventas || Page is Factura

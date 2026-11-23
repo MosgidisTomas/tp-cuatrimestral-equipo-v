@@ -10,8 +10,7 @@ namespace TPCuatrimestralEquipoV
 {
     public partial class NuevaCompra : Page
     {
-        // Productos agregados a la compra. Se guardan en Session (como la lista de la cátedra)
-        // porque la página se recarga en cada postback y hasta confirmar no están en la base.
+        // Productos agregados a la compra, hasta confirmarla.
         private List<DetalleCompra> Detalle
         {
             get
@@ -29,7 +28,6 @@ namespace TPCuatrimestralEquipoV
             {
                 if (!IsPostBack)
                 {
-                    // Compra nueva: se descarta lo que hubiera quedado de una compra sin confirmar.
                     Session.Remove("detalleCompra");
 
                     txtFecha.Text = DateTime.Today.ToString("yyyy-MM-dd");
@@ -50,7 +48,6 @@ namespace TPCuatrimestralEquipoV
             }
         }
 
-        // Solo se ofrecen los productos asociados al proveedor elegido.
         private void cargarProductos()
         {
             ddlProducto.Items.Clear();
@@ -72,8 +69,7 @@ namespace TPCuatrimestralEquipoV
             ddlProducto.Enabled = productos.Count > 0;
         }
 
-        // Muestra el detalle y el total. Con productos agregados no se puede cambiar el proveedor,
-        // porque los productos dependen de él.
+        // Con productos agregados no se puede cambiar el proveedor.
         private void mostrarDetalle()
         {
             gvDetalle.DataSource = Detalle;
@@ -99,7 +95,6 @@ namespace TPCuatrimestralEquipoV
             }
         }
 
-        // Muestra como ayuda el costo de la última compra del producto elegido.
         protected void ddlProducto_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -129,7 +124,6 @@ namespace TPCuatrimestralEquipoV
                 if (!Page.IsValid)
                     return;
 
-                // Se vuelve a revisar en el servidor (la validación del navegador se puede saltear).
                 int cantidad;
                 decimal costo;
                 if (!int.TryParse(txtCantidad.Text, out cantidad) || cantidad < 1 ||
@@ -159,7 +153,6 @@ namespace TPCuatrimestralEquipoV
                 detalle.PrecioUnitario = Math.Round(costo, 2);
                 Detalle.Add(detalle);
 
-                // Deja los campos listos para el próximo producto.
                 ddlProducto.SelectedIndex = 0;
                 txtCantidad.Text = "";
                 txtCosto.Text = "";
@@ -197,7 +190,6 @@ namespace TPCuatrimestralEquipoV
                 string numeroFactura = txtNumeroFactura.Text.Trim();
                 CompraNegocio negocio = new CompraNegocio();
 
-                // Se revisan todos antes de salir, para mostrar todos los errores juntos.
                 if (fecha > DateTime.Today)
                     cvFecha.IsValid = false;
                 if (negocio.existeFactura(idProveedor, numeroFactura))

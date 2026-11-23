@@ -269,15 +269,15 @@ INSERT INTO Usuarios (NombreUsuario, Nombre, Apellido, Email, PasswordHash, Perf
     ('vendedor', N'Juan',          N'Pérez',   N'vendedor@utnhardware.example',
      '56976bf24998ca63e35fe4f1e2469b5751d1856003e8d16fef0aafef496ed044', 2);   -- 2
 
--- StockActual coincide con las compras de prueba de más abajo.
+-- StockActual coincide con las compras y ventas de prueba de más abajo.
 -- El producto 7 no tiene compras: no tiene precio y no se puede vender.
 INSERT INTO Productos (Codigo, Nombre, IdMarca, IdCategoria, StockActual, StockMinimo, PorcentajeGanancia) VALUES
-    ('AMD-R5-7600',   N'Ryzen 5 7600',               1, 1, 14,  5, 25),   -- 1
-    ('INT-I5-14400F', N'Core i5-14400F',             4, 1,  3,  5, 25),   -- 2
-    ('KIN-FB-16D5',   N'Fury Beast 16 GB DDR5',      5, 2, 24, 10, 30),   -- 3
-    ('SAM-990E-1TB',  N'990 EVO 1 TB',               7, 3,  8,  6, 28),   -- 4
-    ('ASU-B650M-A',   N'Prime B650M-A',              2, 4,  3,  3, 22),   -- 5
-    ('COR-RM750E',    N'RM750e',                     3, 5,  4,  4, 20),   -- 6
+    ('AMD-R5-7600',   N'Ryzen 5 7600',               1, 1, 10,  5, 25),   -- 1
+    ('INT-I5-14400F', N'Core i5-14400F',             4, 1,  2,  5, 25),   -- 2
+    ('KIN-FB-16D5',   N'Fury Beast 16 GB DDR5',      5, 2, 14, 10, 30),   -- 3
+    ('SAM-990E-1TB',  N'990 EVO 1 TB',               7, 3,  5,  6, 28),   -- 4
+    ('ASU-B650M-A',   N'Prime B650M-A',              2, 4,  2,  3, 22),   -- 5
+    ('COR-RM750E',    N'RM750e',                     3, 5,  2,  4, 20),   -- 6
     ('MSI-4060-V2X',  N'GeForce RTX 4060 Ventus 2X', 6, 6,  0,  2, 18);   -- 7
 
 INSERT INTO ProductoProveedor (IdProducto, IdProveedor) VALUES
@@ -315,4 +315,37 @@ INSERT INTO MovimientosStock (IdProducto, Fecha, Tipo, Cantidad, IdCompra) VALUE
     (4, '2026-10-05', 1,  8, 3),
     (5, '2026-10-05', 1,  3, 3),
     (2, '2026-10-10', 1,  3, 4);
+
+-- Ventas de prueba. Las fechas son relativas al día en que se corre el script,
+-- para que el Inicio muestre estadísticas del mes y de los últimos 7 días.
+-- Precio de venta = costo de la última compra + porcentaje de ganancia.
+INSERT INTO Ventas (IdCliente, IdUsuario, Fecha, NumeroFactura) VALUES
+    (1, 2, DATEADD(DAY, -25, GETDATE()), 1),   -- 1
+    (2, 2, DATEADD(DAY, -12, GETDATE()), 2),   -- 2
+    (3, 1, DATEADD(DAY,  -6, GETDATE()), 3),   -- 3
+    (4, 2, DATEADD(DAY,  -4, GETDATE()), 4),   -- 4
+    (1, 2, DATEADD(DAY,  -2, GETDATE()), 5),   -- 5
+    (5, 1, DATEADD(DAY,  -1, GETDATE()), 6),   -- 6
+    (2, 2, GETDATE(),                    7);   -- 7
+
+INSERT INTO DetalleVenta (IdVenta, IdProducto, Cantidad, PrecioUnitario) VALUES
+    (1, 1, 1, 287500.00),
+    (1, 3, 2,  78000.00),
+    (2, 4, 1, 115200.00),
+    (2, 6, 1, 132000.00),
+    (3, 1, 2, 287500.00),
+    (3, 5, 1, 207400.00),
+    (4, 3, 4,  78000.00),
+    (5, 2, 1, 263750.00),
+    (5, 3, 2,  78000.00),
+    (6, 1, 1, 287500.00),
+    (6, 4, 2, 115200.00),
+    (7, 3, 2,  78000.00),
+    (7, 6, 1, 132000.00);
+
+-- Un movimiento de tipo Venta (2) por cada línea de venta, con la fecha de su venta.
+INSERT INTO MovimientosStock (IdProducto, Fecha, Tipo, Cantidad, IdVenta)
+SELECT D.IdProducto, V.Fecha, 2, D.Cantidad, D.IdVenta
+FROM DetalleVenta D
+INNER JOIN Ventas V ON V.Id = D.IdVenta;
 GO

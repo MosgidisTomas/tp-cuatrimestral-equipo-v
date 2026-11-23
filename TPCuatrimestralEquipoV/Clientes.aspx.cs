@@ -34,7 +34,6 @@ namespace TPCuatrimestralEquipoV
 
                 if (filtro != "")
                 {
-                    // El DNI se guarda sin puntos: se sacan también del texto buscado.
                     string filtroDocumento = filtro.Replace(".", "");
                     lista = lista.FindAll(x => x.Documento.Contains(filtroDocumento)
                                             || x.Nombre.ToUpper().Contains(filtro)

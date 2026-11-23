@@ -63,8 +63,7 @@
                     <p class="texto-ayuda">Este cliente está inactivo: no se le pueden registrar ventas.</p>
                 <% } %>
                 <div class="acciones mt-0">
-                    <%-- Etapa 3: la baja y la reactivación van a quedar solo para el Administrador. --%>
-                    <% if (EsModificacion) { %>
+                    <% if (EsModificacion && EsAdmin) { %>
                         <% if (ClienteActivo) { %>
                             <button type="button" class="btn btn-outline-danger me-auto" data-bs-toggle="modal" data-bs-target="#modalBaja">Dar de baja</button>
                         <% } else { %>
@@ -78,7 +77,7 @@
         </div>
     </div>
 
-    <% if (EsModificacion && ClienteActivo) { %>
+    <% if (EsModificacion && ClienteActivo && EsAdmin) { %>
     <div class="modal fade" id="modalBaja" tabindex="-1" aria-labelledby="tituloModalBaja" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

@@ -22,10 +22,6 @@ namespace Negocio
                 datos.setearParametro("@hasta", hasta);
                 return Convert.ToDecimal(datos.ejecutarAccionEscalar());
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -41,10 +37,6 @@ namespace Negocio
                 datos.setearParametro("@desde", desde);
                 datos.setearParametro("@hasta", hasta);
                 return Convert.ToInt32(datos.ejecutarAccionEscalar());
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -65,10 +57,6 @@ namespace Negocio
                 datos.setearParametro("@hasta", hasta);
                 return Convert.ToDecimal(datos.ejecutarAccionEscalar());
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -85,10 +73,6 @@ namespace Negocio
                 datos.setearParametro("@hasta", hasta);
                 return Convert.ToInt32(datos.ejecutarAccionEscalar());
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -104,10 +88,6 @@ namespace Negocio
                 datos.setearParametro("@desde", desde);
                 datos.setearParametro("@hasta", hasta);
                 return Convert.ToInt32(datos.ejecutarAccionEscalar());
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -159,10 +139,6 @@ namespace Negocio
 
                 return lista;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -185,10 +161,6 @@ namespace Negocio
                 datos.setearParametro("@desde", desde);
                 datos.setearParametro("@hasta", hasta);
                 return Convert.ToInt32(datos.ejecutarAccionEscalar());
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -226,10 +198,6 @@ namespace Negocio
 
                 return null;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -261,10 +229,6 @@ namespace Negocio
                 }
 
                 return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {

@@ -218,7 +218,7 @@ namespace Negocio
             return aux;
         }
 
-        // Productos activos con stock igual o menor al mínimo, del que más falta al que menos.
+        // Activos con stock menor o igual al mínimo.
         public List<Producto> listarAReponer()
         {
             List<Producto> lista = new List<Producto>();

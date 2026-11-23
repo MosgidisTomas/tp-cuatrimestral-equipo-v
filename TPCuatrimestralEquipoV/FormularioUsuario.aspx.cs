@@ -9,6 +9,15 @@ namespace TPCuatrimestralEquipoV
     {
         public bool EsModificacion { get { return Request.QueryString["id"] != null; } }
 
+        public bool EsUsuarioActual
+        {
+            get
+            {
+                Usuario logueado = (Usuario)Session["usuario"];
+                return EsModificacion && logueado != null && Request.QueryString["id"] == logueado.Id.ToString();
+            }
+        }
+
         public bool UsuarioActivo
         {
             get { return ViewState["UsuarioActivo"] != null ? (bool)ViewState["UsuarioActivo"] : true; }
@@ -23,9 +32,9 @@ namespace TPCuatrimestralEquipoV
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Al editar, la contraseña es opcional: si se deja vacía, no se cambia.
             rfvPassword.Enabled = !EsModificacion;
             rfvPassword2.Enabled = !EsModificacion;
+            ddlPerfil.Enabled = !EsUsuarioActual;
 
             try
             {
@@ -67,8 +76,7 @@ namespace TPCuatrimestralEquipoV
             {
                 lblError.Text = "";
 
-                // El CompareValidator no revisa nada si "Repetir" está vacío.
-                // Al editar eso puede pasar (la contraseña es opcional), así que se compara también acá.
+                // El CompareValidator no valida si "Repetir" está vacío.
                 if (txtPassword.Text != txtPassword2.Text)
                     cmpPassword.IsValid = false;
                 if (!Page.IsValid)
@@ -79,7 +87,6 @@ namespace TPCuatrimestralEquipoV
                 UsuarioNegocio negocio = new UsuarioNegocio();
                 int idUsuario = EsModificacion ? int.Parse(Request.QueryString["id"]) : 0;
 
-                // Se revisan los dos antes de salir, para mostrar todos los errores juntos.
                 if (negocio.existeNombreUsuario(nombreUsuario, idUsuario))
                     cvNombreUsuarioRepetido.IsValid = false;
                 if (negocio.existeEmail(email, idUsuario))
@@ -93,6 +100,8 @@ namespace TPCuatrimestralEquipoV
                 usuario.Apellido = txtApellido.Text.Trim();
                 usuario.Email = email;
                 usuario.Perfil = (TipoPerfil)int.Parse(ddlPerfil.SelectedValue);
+                if (EsUsuarioActual)
+                    usuario.Perfil = TipoPerfil.Administrador;
 
                 if (EsModificacion)
                 {
@@ -113,7 +122,6 @@ namespace TPCuatrimestralEquipoV
                     }
                     catch (Exception ex)
                     {
-                        // El usuario ya está guardado: se desactiva "Guardar" para que no se intente crear de nuevo.
                         lblError.Text = "El usuario se creó, pero no se pudo enviar el mail de bienvenida (" + ex.Message + "). Tocá \"Cancelar\" para volver al listado.";
                         btnAceptar.Enabled = false;
                         return;
@@ -130,6 +138,9 @@ namespace TPCuatrimestralEquipoV
 
         protected void btnConfirmaBaja_Click(object sender, EventArgs e)
         {
+            if (EsUsuarioActual)
+                return;
+
             try
             {
                 UsuarioNegocio negocio = new UsuarioNegocio();

@@ -15,7 +15,6 @@
     <link href="~/Content/img/isotipo.png" rel="icon" type="image/png" />
 </head>
 <body>
-    <%-- Página sin Site.Master: no lleva menú porque todavía no hay usuario. --%>
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>

@@ -106,8 +106,7 @@
     <% } %>
 
     <script>
-        // La llama el CustomValidator cvProveedores (ClientValidationFunction) junto con los demás validadores.
-        // Es válido si hay al menos una casilla marcada en la lista de proveedores.
+        // Al menos un proveedor marcado.
         function validarProveedores(source, args) {
             var casillas = document.querySelectorAll('.lista-casillas input[type="checkbox"]');
             args.IsValid = false;

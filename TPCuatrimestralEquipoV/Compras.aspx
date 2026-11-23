@@ -12,7 +12,6 @@
 
     <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
 
-    <%-- Las fechas empiezan vacías: se muestran todas las compras y se filtra solo si se completan. --%>
     <asp:Panel ID="pnlBuscar" runat="server" CssClass="tarjeta mb-4" DefaultButton="btnBuscar">
         <div class="row g-3 align-items-end">
             <div class="col-sm-6 col-md-3">

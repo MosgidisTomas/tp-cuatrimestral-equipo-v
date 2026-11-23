@@ -54,7 +54,6 @@ namespace Negocio
             }
         }
 
-        // Devuelve null si no hay ningún cliente con ese DNI (sin puntos).
         public Cliente buscarPorDocumento(string documento)
         {
             Cliente aux = null;
@@ -113,7 +112,6 @@ namespace Negocio
             }
         }
 
-        // La fecha de alta no se modifica: es la del día en que se registró el cliente.
         public void modificar(Cliente cliente)
         {
             AccesoDatos datos = new AccesoDatos();

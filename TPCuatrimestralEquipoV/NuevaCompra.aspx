@@ -9,9 +9,6 @@
         </div>
     </div>
 
-    <%-- Dos grupos de validación: "Agregar" (un producto al detalle) y "Confirmar" (la compra entera).
-         El detalle se guarda en Session hasta confirmar la compra. --%>
-
     <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block" Visible="false" />
 
     <section class="tarjeta">
@@ -64,7 +61,6 @@
                 <asp:Button ID="btnAgregar" runat="server" Text="Agregar" CssClass="btn btn-outline-secondary w-100" ValidationGroup="Agregar" OnClick="btnAgregar_Click" />
             </div>
         </div>
-        <%-- Ayudas en una fila aparte, con las mismas columnas que los campos: así no desalinean los campos de arriba. --%>
         <div class="row gx-3 mt-2 mb-3 texto-ayuda">
             <div class="col-md-7">Solo aparecen los productos del proveedor elegido. Para cambiar de proveedor, quitá los productos agregados.</div>
             <div class="col-md-3"><asp:Label ID="lblUltimoCosto" runat="server" /></div>

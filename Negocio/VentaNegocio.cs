@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,10 +38,6 @@ namespace Negocio
                 while (datos.Lector.Read())
                     lista.Add(leerVenta(datos));
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -64,10 +61,6 @@ namespace Negocio
 
                 if (datos.Lector.Read())
                     venta = leerVenta(datos);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -120,10 +113,6 @@ namespace Negocio
 
                 return lista;
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
             finally
             {
                 datos.cerrarConexion();
@@ -158,12 +147,24 @@ namespace Negocio
             if (nueva.Detalles.Count == 0)
                 throw new InvalidOperationException("La venta tiene que tener al menos un producto.");
 
+            Cliente cliente = new ClienteNegocio().buscarPorId(nueva.Cliente.Id);
+            if (cliente == null || !cliente.Activo)
+                throw new InvalidOperationException("El cliente fue dado de baja: no se le puede vender.");
+
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            foreach (DetalleVenta detalle in nueva.Detalles)
+            {
+                Producto producto = productoNegocio.buscarPorId(detalle.Producto.Id);
+                if (producto == null || !producto.Activo)
+                    throw new InvalidOperationException(detalle.Producto.Nombre + " fue dado de baja: quitalo de la venta.");
+            }
+
             AccesoDatos datos = new AccesoDatos();
             try
             {
                 datos.iniciarTransaccion();
 
-                datos.setearConsulta("SELECT ISNULL(MAX(NumeroFactura), 0) + 1 FROM Ventas WITH (UPDLOCK, HOLDLOCK)");
+                datos.setearConsulta("SELECT ISNULL(MAX(NumeroFactura), 0) + 1 FROM Ventas");
                 nueva.NumeroFactura = Convert.ToInt32(datos.ejecutarAccionEscalar());
 
                 datos.setearConsulta(@"INSERT INTO Ventas (IdCliente, IdUsuario, Fecha, NumeroFactura)
@@ -204,6 +205,14 @@ namespace Negocio
                 }
 
                 datos.confirmarTransaccion();
+            }
+            catch (SqlException ex)
+            {
+                datos.cancelarTransaccion();
+                // 2627 y 2601: número de factura repetido (UNIQUE).
+                if (ex.Number == 2627 || ex.Number == 2601)
+                    throw new InvalidOperationException("Otra venta se registró al mismo tiempo. Tocá \"Confirmar venta\" de nuevo.");
+                throw;
             }
             catch (Exception)
             {

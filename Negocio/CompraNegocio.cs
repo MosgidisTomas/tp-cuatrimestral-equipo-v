@@ -6,7 +6,6 @@ namespace Negocio
 {
     public class CompraNegocio
     {
-        // Datos de la cabecera de la compra, con el proveedor y el usuario que la cargó.
         private const string ConsultaBase = @"SELECT C.Id,
                                                      C.Fecha,
                                                      C.NumeroFactura,
@@ -21,8 +20,6 @@ namespace Negocio
                                               INNER JOIN Proveedores PR ON PR.Id = C.IdProveedor
                                               INNER JOIN Usuarios U ON U.Id = C.IdUsuario";
 
-        // Todas las compras, de la más nueva a la más vieja, cada una con su detalle
-        // (el total de la compra lo calcula la clase Compra sumando el detalle).
         public List<Compra> listar()
         {
             List<Compra> lista = new List<Compra>();
@@ -46,7 +43,6 @@ namespace Negocio
             return lista;
         }
 
-        // Una compra con su detalle; null si no existe.
         public Compra buscarPorId(int id)
         {
             Compra compra = null;
@@ -71,7 +67,6 @@ namespace Negocio
             return compra;
         }
 
-        // Productos de una compra, con la cantidad y el costo unitario de esa compra.
         public List<DetalleCompra> listarDetalle(int idCompra)
         {
             List<DetalleCompra> lista = new List<DetalleCompra>();
@@ -118,9 +113,6 @@ namespace Negocio
             }
         }
 
-        // Guarda la compra en una sola transacción: la cabecera, y por cada producto su línea de detalle,
-        // la suma del stock y el movimiento de stock. Si algo falla, se deshace todo.
-        // Al terminar, nueva.Id queda con el Id de la compra guardada.
         public void agregar(Compra nueva)
         {
             if (nueva.Detalles.Count == 0)
@@ -131,7 +123,6 @@ namespace Negocio
             {
                 datos.iniciarTransaccion();
 
-                // 1. Cabecera de la compra.
                 datos.setearConsulta(@"INSERT INTO Compras (IdProveedor, IdUsuario, Fecha, NumeroFactura)
                                        OUTPUT INSERTED.Id
                                        VALUES (@idProveedor, @idUsuario, @fecha, @numeroFactura)");
@@ -143,7 +134,6 @@ namespace Negocio
 
                 foreach (DetalleCompra detalle in nueva.Detalles)
                 {
-                    // 2. Línea de la compra, con el costo de esta compra.
                     datos.setearConsulta(@"INSERT INTO DetalleCompra (IdCompra, IdProducto, Cantidad, PrecioUnitario)
                                            VALUES (@idCompra, @idProducto, @cantidad, @precioUnitario)");
                     datos.setearParametro("@idCompra", nueva.Id);
@@ -152,13 +142,11 @@ namespace Negocio
                     datos.setearParametro("@precioUnitario", detalle.PrecioUnitario);
                     datos.ejecutarAccion();
 
-                    // 3. Suma el stock del producto (con el mismo "datos": queda dentro de la transacción).
                     datos.setearConsulta("UPDATE Productos SET StockActual = StockActual + @cantidad WHERE Id = @idProducto");
                     datos.setearParametro("@cantidad", detalle.Cantidad);
                     datos.setearParametro("@idProducto", detalle.Producto.Id);
                     datos.ejecutarAccion();
 
-                    // 4. Movimiento de stock ("línea de stock" de la consigna).
                     datos.setearConsulta(@"INSERT INTO MovimientosStock (IdProducto, Fecha, Tipo, Cantidad, IdCompra)
                                            VALUES (@idProducto, @fecha, @tipo, @cantidad, @idCompra)");
                     datos.setearParametro("@idProducto", detalle.Producto.Id);
@@ -182,7 +170,6 @@ namespace Negocio
             }
         }
 
-        // Un proveedor no puede tener dos facturas con el mismo número (UNIQUE en la base).
         public bool existeFactura(int idProveedor, string numeroFactura)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -200,7 +187,6 @@ namespace Negocio
             }
         }
 
-        // Arma la compra con la fila actual del lector (las columnas de ConsultaBase).
         private Compra leerCompra(AccesoDatos datos)
         {
             Compra compra = new Compra();

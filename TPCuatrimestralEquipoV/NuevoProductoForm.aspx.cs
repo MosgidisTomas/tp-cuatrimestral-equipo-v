@@ -96,8 +96,7 @@ namespace TPCuatrimestralEquipoV
             seleccionar(ddlMarca, p.Marca.Id, p.Marca.Descripcion);
             seleccionar(ddlCategoria, p.Categoria.Id, p.Categoria.Descripcion);
 
-            // Las listas solo traen proveedores activos. Si el producto está asociado a uno
-            // inactivo, se agrega igual (marcado) para que al guardar no se pierda la asociación.
+            // Proveedores inactivos asociados: se agregan para no perderlos al guardar.
             foreach (Proveedor prov in p.Proveedores)
             {
                 ListItem item = cblProveedores.Items.FindByValue(prov.Id.ToString());
@@ -158,7 +157,6 @@ namespace TPCuatrimestralEquipoV
                     if (item.Selected)
                         p.Proveedores.Add(new Proveedor { Id = int.Parse(item.Value) });
 
-                // Se revisan los dos antes de salir, para mostrar todos los errores juntos.
                 if (p.Proveedores.Count == 0)
                     cvProveedores.IsValid = false;
                 if (negocio.existeCodigo(p.Codigo, p.Id))

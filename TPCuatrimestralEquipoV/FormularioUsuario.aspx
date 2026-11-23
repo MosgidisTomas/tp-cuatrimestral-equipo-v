@@ -71,9 +71,11 @@
                 <% if (EsModificacion && !UsuarioActivo) { %>
                     <p class="texto-ayuda">Este usuario está inactivo: no puede ingresar al sistema.</p>
                 <% } %>
+                <% if (EsUsuarioActual) { %>
+                    <p class="texto-ayuda">Es tu usuario: no podés darte de baja ni cambiar tu perfil.</p>
+                <% } %>
                 <div class="acciones mt-0">
-                    <%-- Etapa 3 (con login): que un administrador no pueda darse de baja a sí mismo ni sacarse el perfil de Administrador. --%>
-                    <% if (EsModificacion) { %>
+                    <% if (EsModificacion && !EsUsuarioActual) { %>
                         <% if (UsuarioActivo) { %>
                             <button type="button" class="btn btn-outline-danger me-auto" data-bs-toggle="modal" data-bs-target="#modalBaja">Dar de baja</button>
                         <% } else { %>
@@ -87,7 +89,7 @@
         </div>
     </div>
 
-    <% if (EsModificacion && UsuarioActivo) { %>
+    <% if (EsModificacion && UsuarioActivo && !EsUsuarioActual) { %>
     <div class="modal fade" id="modalBaja" tabindex="-1" aria-labelledby="tituloModalBaja" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

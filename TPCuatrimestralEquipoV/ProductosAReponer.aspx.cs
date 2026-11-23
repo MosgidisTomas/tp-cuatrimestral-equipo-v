@@ -30,7 +30,6 @@ namespace TPCuatrimestralEquipoV
             }
         }
 
-        // Los proveedores del producto separados por coma, para la columna "Proveedores".
         protected string textoProveedores(object proveedores)
         {
             List<string> nombres = new List<string>();

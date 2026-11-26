@@ -222,6 +222,23 @@ namespace Negocio
             }
         }
 
+        public bool verificarPassword(int id, string password)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM Usuarios WHERE Id = @Id AND PasswordHash = @PasswordHash");
+                datos.setearParametro("@Id", id);
+                datos.setearParametro("@PasswordHash", calcularHash(password));
+                int cantidad = Convert.ToInt32(datos.ejecutarAccionEscalar());
+                return cantidad > 0;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public bool loguear(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();

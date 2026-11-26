@@ -92,6 +92,7 @@
                 <header class="barra-superior">
                     <span class="barra-titulo"><%: Page.Title %></span>
                     <asp:Label ID="lblUsuario" runat="server" CssClass="small text-muted ms-auto me-3" />
+                    <a runat="server" href="~/CambiarPassword" class="btn btn-outline-secondary btn-sm me-2">Cambiar contraseña</a>
                     <asp:LinkButton ID="lnkCerrarSesion" runat="server" CssClass="btn btn-outline-secondary btn-sm" CausesValidation="false" OnClick="lnkCerrarSesion_Click">Cerrar sesión</asp:LinkButton>
                 </header>
 

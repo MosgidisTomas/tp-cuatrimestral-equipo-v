@@ -34,7 +34,7 @@ namespace TPCuatrimestralEquipoV
         private bool EsPaginaDeVendedor()
         {
             return Page is _Default || Page is NuevaVenta || Page is Ventas || Page is Factura
-                || Page is Clientes || Page is FormularioCliente;
+                || Page is Clientes || Page is FormularioCliente || Page is CambiarPassword;
         }
 
         protected void Page_Load(object sender, EventArgs e)
